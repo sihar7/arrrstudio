@@ -1,10 +1,10 @@
-// Semua tautan keluar ArrrStudio dikumpulkan di sini supaya cukup diganti di satu tempat.
+﻿// Semua tautan keluar ArrrStudio dikumpulkan di sini supaya cukup diganti di satu tempat.
 export const Url = {
   store: "https://www.arrveilstore.my.id/",
   license: "https://arrstudioweb.vercel.app/en",
   converter: "https://bypass.arrrstudio.com",
   discord: "https://discord.gg/mtn3YmwjV",
-  founderPortfolio: "https://portfoliosigit.vercel.app/",
+  founderPortfolio: "https://portfolio-founder.arrrstudio.com/",
   founderGithub: "https://github.com/sihar7",
 } as const;
 
