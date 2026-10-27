@@ -1,0 +1,298 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ── Primitive (acuan Refero: Linear "midnight precision instrument") ── */
+:root {
+  --void: #08090a;
+  --carbon: #0f1011;
+  --obsidian: #161718;
+  --graphite: #23252a;
+  --smoke: #383b3f;
+  --ash: #62666d;
+  --fog: #8a8f98;
+  --mist: #d0d6e0;
+  --bone: #e5e5e6;
+  --paper: #ffffff;
+  --maroon-300: #e0899a;
+  --maroon-500: #a3243b;
+  --maroon-600: #8a2134;
+  --maroon-700: #741a2b;
+}
+
+/* ── Semantic: terang (silver) — peran token sama dengan gelap ── */
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+  --canvas: #eceef1;
+  --surface: #f7f8f9;
+  --sunken: #e2e5ea;
+  --tint: rgb(8 9 10 / 0.05);
+  --ink: var(--void);
+  --ink-2: #2e3137;
+  --ink-3: #575b62;
+  --line: #d0d6e0;
+  --line-strong: #b3bac5;
+  --accent: var(--maroon-700);
+  --accent-hover: var(--maroon-600);
+  --accent-ink: #ffffff;
+  --neutral-cta: var(--void);
+  --neutral-cta-ink: var(--paper);
+  --floor: linear-gradient(180deg, transparent 10%, #c9ced8 100%);
+  --spot-edge: rgb(8 9 10 / 0.45);
+  --surface-hi: #ffffff;
+  --inner-hi: rgb(255 255 255 / 0.9);
+  --drop: rgb(30 34 44 / 0.22);
+  --chrome-edge: linear-gradient(150deg, #ffffff 0%, #c9ced8 30%, #b3bac5 62%, rgb(116 26 43 / 0.55) 100%);
+  --spot-fill: rgb(255 255 255 / 0.6);
+  --focus: var(--maroon-600);
+}
+
+/* ── Semantic: gelap (midnight) ────────────────────────────── */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --canvas: var(--void);
+  --surface: var(--carbon);
+  --sunken: var(--obsidian);
+  --tint: rgb(255 255 255 / 0.05);
+  --ink: #f7f8f8;
+  --ink-2: var(--mist);
+  --ink-3: var(--fog);
+  --line: var(--graphite);
+  --line-strong: var(--smoke);
+  --accent: var(--maroon-500);
+  --accent-hover: #b52c45;
+  --accent-ink: #ffffff;
+  --neutral-cta: var(--paper);
+  --neutral-cta-ink: var(--void);
+  --floor: linear-gradient(180deg, transparent 10%, rgb(208 214 224 / 0.16) 100%);
+  --spot-edge: rgb(208 214 224 / 0.6);
+  --surface-hi: #131416;
+  --inner-hi: rgb(255 255 255 / 0.05);
+  --drop: rgb(0 0 0 / 0.6);
+  --chrome-edge: linear-gradient(150deg, rgb(229 229 230 / 0.45) 0%, rgb(56 59 63 / 0.7) 28%, rgb(35 37 42 / 0.9) 62%, rgb(163 36 59 / 0.6) 100%);
+  --spot-fill: rgb(255 255 255 / 0.035);
+  --focus: var(--maroon-300);
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-sunken: var(--sunken);
+  --color-tint: var(--tint);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-ink: var(--accent-ink);
+  --color-neutral-cta: var(--neutral-cta);
+  --color-neutral-cta-ink: var(--neutral-cta-ink);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono-face), ui-monospace, monospace;
+  --radius-card: 12px;
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* ── Base ──────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "cv01", "ss03", "zero";
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.22s ease, color 0.22s ease;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* ── Panel bertepi chrome: silver mengilap di kiri-atas → rim maroon di kanan-bawah (bevel logo) ── */
+.frame {
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, var(--surface-hi), var(--surface)) padding-box,
+    var(--chrome-edge) border-box;
+  box-shadow:
+    inset 0 1px 0 var(--inner-hi),
+    0 40px 80px -40px var(--drop);
+}
+
+/* Panel kode & kartu pemain selalu gelap (layar editor / HUD game) di kedua tema */
+.frame-dark {
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, #141518, #0c0d0e) padding-box,
+    linear-gradient(150deg, rgb(229 229 230 / 0.55) 0%, rgb(56 59 63 / 0.7) 28%, rgb(35 37 42 / 0.9) 62%, rgb(163 36 59 / 0.75) 100%) border-box;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.06),
+    0 40px 80px -36px rgb(0 0 0 / 0.55);
+  color: var(--mist);
+}
+
+/* Lantai atmosfer — satu-satunya gradien, khusus di bawah showcase hero */
+.hero-floor {
+  background: var(--floor);
+}
+
+/* ── Sorot kursor: garis tepi hairline menyala + cahaya lembut di dalam kartu ── */
+.spotlight {
+  --sx: 50%;
+  --sy: 50%;
+  position: relative;
+  isolation: isolate;
+}
+
+.spotlight::before,
+.spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.spotlight::before {
+  z-index: 2;
+  padding: 1px;
+  background: radial-gradient(280px circle at var(--sx) var(--sy), var(--spot-edge), transparent 65%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.spotlight::after {
+  z-index: -1;
+  background: radial-gradient(420px circle at var(--sx) var(--sy), var(--spot-fill), transparent 60%);
+}
+
+.spotlight:hover::before,
+.spotlight:hover::after {
+  opacity: 1;
+}
+
+/* ── Logo hidup: kilau menyapu chrome + bintang maroon berkedip ── */
+.logo-shine {
+  background: linear-gradient(105deg, transparent 38%, rgb(255 255 255 / 0.95) 50%, transparent 62%) no-repeat;
+  background-size: 260% 100%;
+  background-position: 160% 0;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mix-blend-mode: overlay;
+  animation: logo-shine 5s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+}
+
+.logo-lockup:hover .logo-shine {
+  animation-duration: 1.4s;
+}
+
+@keyframes logo-shine {
+  0%,
+  62% {
+    background-position: 160% 0;
+  }
+  100% {
+    background-position: -60% 0;
+  }
+}
+
+.logo-star {
+  background: radial-gradient(circle, rgb(255 120 145 / 0.9), rgb(194 68 91 / 0.35) 35%, transparent 70%);
+  mix-blend-mode: screen;
+  animation: logo-star 2.6s ease-in-out infinite;
+}
+
+@keyframes logo-star {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+}
+
+/* ── Strip produk berjalan (pengganti logo bar pelanggan) ── */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee 48s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .marquee-track,
+  .logo-shine,
+  .logo-star {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.live-dot {
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}

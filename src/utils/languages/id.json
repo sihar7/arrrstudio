@@ -1,0 +1,192 @@
+{
+  "meta": {
+    "title": "ArrrStudio — Studio sistem Roblox & web dari Bandung",
+    "description": "ArrrStudio membangun kit Roblox siap pakai, alat kreator, dan website pesanan. Didirikan oleh Sigit Hardianto di Bandung."
+  },
+  "nav": {
+    "about": "Tentang",
+    "founder": "Pendiri",
+    "ecosystem": "Ekosistem",
+    "catalog": "Katalog",
+    "timeline": "Linimasa",
+    "skip": "Lewati ke konten",
+    "menu": "Buka menu",
+    "close": "Tutup menu",
+    "theme": "Ganti tema terang/gelap",
+    "language": "Bahasa",
+    "philosophy": "Filosofi",
+    "backToTop": "Kembali ke atas"
+  },
+  "hero": {
+    "eyebrow": "ArrrStudio — studio independen, Bandung",
+    "title": "Sistem Roblox dan web yang siap dipakai di hari pertama.",
+    "lead": "ArrrStudio merancang kit game Roblox, alat untuk kreator, dan website pesanan. Setiap rilis datang lengkap: kode yang rapi, UI yang dikurasi, dan dokumentasi pemasangan.",
+    "primary": "Kunjungi Arrveil.store",
+    "secondary": "Lisensi kit",
+    "sceneLabel": "Huruf A logo ArrrStudio dalam 3D: chrome silver dengan bintang maroon",
+    "sceneHint": "Gerakkan kursor untuk memutar",
+    "badges": [
+      "Chrome",
+      "Maroon",
+      "WebGL"
+    ],
+    "strip": "Sudah dirilis ArrrStudio"
+  },
+  "spec": {
+    "founded": "Didirikan",
+    "founder": "Pendiri",
+    "base": "Basis",
+    "focus": "Fokus",
+    "focusValue": "Kit Roblox · Alat kreator · Web",
+    "channel": "Komunitas",
+    "channelValue": "Discord ArrStudio",
+    "founderValue": "Sigit Hardianto (Arrr)",
+    "team": "Tim",
+    "teamValue": "Solo developer"
+  },
+  "about": {
+    "label": "Tentang",
+    "title": "Apa itu ArrrStudio",
+    "body": [
+      "ArrrStudio adalah studio pengembang yang fokus pada satu hal: membuat sistem yang langsung jalan. Pemilik game Roblox membeli kit, memasukkannya ke place, dan kit itu terhubung ke DataStore, rank grup, gamepass, dan leaderstats yang sudah mereka pakai.",
+      "Di luar Roblox, studio yang sama mengerjakan website, panel admin, dan aplikasi untuk klien — dengan standar desain dan keamanan yang sama."
+    ],
+    "principles": [
+      {
+        "title": "Siap rilis",
+        "text": "Kit dikirim sebagai sistem utuh yang sudah diuji, bukan potongan skrip yang harus dirakit sendiri."
+      },
+      {
+        "title": "Dikurasi",
+        "text": "UI dirancang dengan token desain, responsif di PC dan HP, tanpa tampilan template."
+      },
+      {
+        "title": "Tahan lama",
+        "text": "Koneksi dibersihkan, data per pemain dijaga, dan beban server dihitung sejak awal."
+      }
+    ],
+    "fileLabel": "Modul prinsip"
+  },
+  "philosophy": {
+    "label": "Filosofi",
+    "title": "Dari nama di game, jadi nama studio.",
+    "story": [
+      "“Arrr” adalah nama yang dipakai Sigit Hardianto di dalam game. Awalnya tidak pernah ada niat membuat studio — sistem-sistem itu dibangun untuk dipakai sendiri di Roblox.",
+      "Ternyata kreator lain membutuhkannya juga. Satu kit menjadi dua, lalu menjadi katalog. Nama di game itu dibawa apa adanya, dan lahirlah ArrrStudio.",
+      "Sampai hari ini ArrrStudio dijalankan oleh satu orang: seorang solo developer yang merancang, menulis kode, menguji, dan mendukung setiap rilis sendiri."
+    ],
+    "quote": "Awalnya tidak berniat membuat. Pada akhirnya, tetap membuat.",
+    "name": {
+      "player": "Nama pemain",
+      "playerText": "Nama Sigit di dalam game — identitas yang dipakai jauh sebelum ada studio.",
+      "studio": "Yang lahir kemudian",
+      "studioText": "Tempat sistem yang tadinya dipakai sendiri dirilis untuk semua kreator."
+    },
+    "values": [
+      {
+        "title": "Dibuat karena dipakai",
+        "text": "Setiap sistem lahir dari kebutuhan nyata di game sendiri, bukan sekadar pajangan."
+      },
+      {
+        "title": "Satu orang, satu standar",
+        "text": "Desain, kode, uji, sampai dukungan dikerjakan satu tangan — kualitas tidak hilang di serah terima."
+      },
+      {
+        "title": "Tumbuh dari permintaan",
+        "text": "Katalog bertambah karena kreator memintanya, bukan karena rencana besar di awal."
+      }
+    ],
+    "card": {
+      "status": "Online",
+      "role": "Peran",
+      "roleValue": "Solo dev",
+      "since": "Sejak",
+      "releases": "Rilis",
+      "releasesValue": "{n} produk",
+      "merge": "Nama di game + studio"
+    }
+  },
+  "founder": {
+    "label": "Pendiri",
+    "role": "Pendiri & solo developer",
+    "bio": "Sigit Hardianto — dikenal sebagai “Arrr” di dalam game — mendirikan ArrrStudio di Bandung dan menjalankannya sebagai solo developer. Latar belakangnya pengembangan web enterprise (Vue.js, .NET, Laravel) yang kemudian dibawa ke Roblox: arsitektur modular, data yang aman, dan UI yang diperlakukan sebagai produk.",
+    "stack": "Teknologi harian",
+    "portfolio": "Lihat portofolio",
+    "github": "GitHub"
+  },
+  "ecosystem": {
+    "label": "Ekosistem",
+    "title": "Tiga pintu, satu studio.",
+    "lead": "Setiap layanan ArrrStudio punya rumahnya sendiri. Pilih sesuai yang kamu butuhkan.",
+    "items": {
+      "store": {
+        "name": "Arrveil.store",
+        "text": "Marketplace produk digital: kit & aset Roblox, Robux, akun game, dan langganan premium. Bayar ke QRIS toko, setiap pesanan terlacak sampai bukti pengiriman."
+      },
+      "license": {
+        "name": "ArrStudio License",
+        "text": "Portal lisensi kit premium. Kunci lisensi ditempel di modul Config kit, lalu diverifikasi otomatis saat server Roblox menyala."
+      },
+      "converter": {
+        "name": "ARRR Studio Bypass",
+        "text": "Alat kreator Roblox di web dan desktop: YouTube jadi audio siap upload ke Roblox, panorama jadi Skybox 6 sisi, hapus background, upscale gambar, dan obfuscator Luau 10 lapis."
+      },
+      "discord": {
+        "name": "Komunitas Discord",
+        "text": "Tempat pengumuman rilis, dukungan pemasangan, dan diskusi sesama kreator Roblox."
+      }
+    }
+  },
+  "catalog": {
+    "label": "Katalog",
+    "title": "Yang sudah kami rilis.",
+    "lead": "Sebagian produk di katalog. Harga dan stok terbaru selalu ada di Arrveil.store.",
+    "groups": {
+      "kits": "Kit sistem game",
+      "tools": "UI, alat & efek",
+      "services": "Pesanan khusus"
+    },
+    "services": [
+      "Website & company profile",
+      "Web app, dashboard & sistem",
+      "Aplikasi mobile — Android, iOS, PWA"
+    ],
+    "cta": "Lihat semua di toko"
+  },
+  "timeline": {
+    "label": "Linimasa",
+    "title": "Perjalanan sejauh ini.",
+    "items": [
+      {
+        "when": "2026",
+        "title": "ArrrStudio berdiri",
+        "text": "Tanpa niat menjadi studio, Sigit (“Arrr”) membangun kit Roblox untuk dipakai sendiri — lalu kreator lain ikut memintanya."
+      },
+      {
+        "when": "Sep 2026",
+        "title": "Sistem lisensi kit",
+        "text": "ClubKit Pro dan Summit Kit dirilis dengan lisensi yang terpasang langsung di Config."
+      },
+      {
+        "when": "Okt 2026",
+        "title": "ARRR Studio Bypass",
+        "text": "Alat kreator Roblox web & desktop diluncurkan di bypass.arrrstudio.com, dengan plan Free, Pro, dan Studio."
+      },
+      {
+        "when": "Sekarang",
+        "title": "Arrveil.store",
+        "text": "Katalog kit, alat, dan produk digital dikumpulkan dalam satu marketplace."
+      }
+    ]
+  },
+  "closing": {
+    "title": "Mulai dari toko. Lanjutkan dengan lisensi.",
+    "text": "Pilih kit di Arrveil.store, aktifkan lisensinya, lalu publish. Butuh website atau sistem khusus? Hubungi kami lewat Discord.",
+    "store": "Buka Arrveil.store",
+    "discord": "Gabung Discord"
+  },
+  "footer": {
+    "rights": "Hak cipta dilindungi.",
+    "by": "Dibangun oleh"
+  }
+}

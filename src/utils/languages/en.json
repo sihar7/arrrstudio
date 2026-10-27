@@ -1,0 +1,192 @@
+{
+  "meta": {
+    "title": "ArrrStudio — Roblox & web systems studio from Bandung",
+    "description": "ArrrStudio builds ready-to-ship Roblox kits, creator tools and custom websites. Founded by Sigit Hardianto in Bandung, Indonesia."
+  },
+  "nav": {
+    "about": "About",
+    "founder": "Founder",
+    "ecosystem": "Ecosystem",
+    "catalog": "Catalog",
+    "timeline": "Timeline",
+    "skip": "Skip to content",
+    "menu": "Open menu",
+    "close": "Close menu",
+    "theme": "Toggle light/dark theme",
+    "language": "Language",
+    "philosophy": "Philosophy",
+    "backToTop": "Back to top"
+  },
+  "hero": {
+    "eyebrow": "ArrrStudio — independent studio, Bandung",
+    "title": "Roblox and web systems that work on day one.",
+    "lead": "ArrrStudio designs Roblox game kits, creator tools and custom websites. Every release ships complete: clean code, curated UI and installation docs.",
+    "primary": "Visit Arrveil.store",
+    "secondary": "Kit licensing",
+    "sceneLabel": "The ArrrStudio A mark in 3D: silver chrome with a maroon star",
+    "sceneHint": "Move your cursor to rotate",
+    "badges": [
+      "Chrome",
+      "Maroon",
+      "WebGL"
+    ],
+    "strip": "Shipped by ArrrStudio"
+  },
+  "spec": {
+    "founded": "Founded",
+    "founder": "Founder",
+    "base": "Based in",
+    "focus": "Focus",
+    "focusValue": "Roblox kits · Creator tools · Web",
+    "channel": "Community",
+    "channelValue": "ArrStudio Discord",
+    "founderValue": "Sigit Hardianto (Arrr)",
+    "team": "Team",
+    "teamValue": "Solo developer"
+  },
+  "about": {
+    "label": "About",
+    "title": "What is ArrrStudio",
+    "body": [
+      "ArrrStudio is a development studio focused on one thing: systems that just run. Roblox game owners buy a kit, drop it into their place, and it plugs into the DataStore, group ranks, gamepasses and leaderstats they already use.",
+      "Beyond Roblox, the same studio builds websites, admin panels and apps for clients — held to the same design and security standards."
+    ],
+    "principles": [
+      {
+        "title": "Ship-ready",
+        "text": "Kits arrive as complete, tested systems — not loose scripts you have to assemble yourself."
+      },
+      {
+        "title": "Curated",
+        "text": "UI is built on design tokens, responsive on PC and mobile, with nothing that looks like a template."
+      },
+      {
+        "title": "Built to last",
+        "text": "Connections are cleaned up, per-player data is protected and server load is budgeted from the start."
+      }
+    ],
+    "fileLabel": "Principles module"
+  },
+  "philosophy": {
+    "label": "Philosophy",
+    "title": "From an in-game name to a studio name.",
+    "story": [
+      "“Arrr” is the name Sigit Hardianto plays under. There was never a plan to start a studio — these systems were built for his own use in Roblox.",
+      "Then other creators wanted them too. One kit became two, then a catalog. The in-game name came along as it was, and ArrrStudio was born.",
+      "To this day ArrrStudio is run by one person: a solo developer who designs, codes, tests and supports every release himself."
+    ],
+    "quote": "It was never meant to be built. It got built anyway.",
+    "name": {
+      "player": "Player name",
+      "playerText": "Sigit’s name in-game — an identity used long before there was a studio.",
+      "studio": "What came after",
+      "studioText": "Where systems once built for personal use are released for every creator."
+    },
+    "values": [
+      {
+        "title": "Built because it’s used",
+        "text": "Every system starts from a real need in his own games, not as a showpiece."
+      },
+      {
+        "title": "One person, one standard",
+        "text": "Design, code, testing and support come from one pair of hands — nothing gets lost in handoffs."
+      },
+      {
+        "title": "Grown by request",
+        "text": "The catalog grows because creators ask for it, not because of a grand plan."
+      }
+    ],
+    "card": {
+      "status": "Online",
+      "role": "Role",
+      "roleValue": "Solo dev",
+      "since": "Since",
+      "releases": "Shipped",
+      "releasesValue": "{n} products",
+      "merge": "In-game name + studio"
+    }
+  },
+  "founder": {
+    "label": "Founder",
+    "role": "Founder & solo developer",
+    "bio": "Sigit Hardianto — known in-game as “Arrr” — founded ArrrStudio in Bandung and runs it as a solo developer. His background is enterprise web development (Vue.js, .NET, Laravel), carried into Roblox: modular architecture, safe data and UI treated as a product.",
+    "stack": "Daily stack",
+    "portfolio": "View portfolio",
+    "github": "GitHub"
+  },
+  "ecosystem": {
+    "label": "Ecosystem",
+    "title": "Three doors, one studio.",
+    "lead": "Each ArrrStudio service has its own home. Pick the one you need.",
+    "items": {
+      "store": {
+        "name": "Arrveil.store",
+        "text": "Digital marketplace: Roblox kits & assets, Robux, game accounts and premium subscriptions. Pay straight to the store's QRIS, and every order is tracked through to proof of delivery."
+      },
+      "license": {
+        "name": "ArrStudio License",
+        "text": "License portal for premium kits. The key goes into the kit's Config module and is verified automatically when the Roblox server starts."
+      },
+      "converter": {
+        "name": "ARRR Studio Bypass",
+        "text": "Roblox creator tools on web and desktop: YouTube to Roblox-ready audio, panoramas to 6-sided Skyboxes, background removal, image upscaling and a 10-layer Luau obfuscator."
+      },
+      "discord": {
+        "name": "Discord community",
+        "text": "Release announcements, installation support and conversations with other Roblox creators."
+      }
+    }
+  },
+  "catalog": {
+    "label": "Catalog",
+    "title": "What we've shipped.",
+    "lead": "A selection from the catalog. Current prices and availability live on Arrveil.store.",
+    "groups": {
+      "kits": "Game system kits",
+      "tools": "UI, tools & effects",
+      "services": "Custom builds"
+    },
+    "services": [
+      "Websites & company profiles",
+      "Web apps, dashboards & systems",
+      "Mobile apps — Android, iOS, PWA"
+    ],
+    "cta": "See everything in the store"
+  },
+  "timeline": {
+    "label": "Timeline",
+    "title": "The road so far.",
+    "items": [
+      {
+        "when": "2026",
+        "title": "ArrrStudio is founded",
+        "text": "With no plan to become a studio, Sigit (“Arrr”) builds Roblox kits for his own use — then other creators start asking for them."
+      },
+      {
+        "when": "Sep 2026",
+        "title": "Kit licensing",
+        "text": "ClubKit Pro and Summit Kit launch with a license that lives directly in Config."
+      },
+      {
+        "when": "Oct 2026",
+        "title": "ARRR Studio Bypass",
+        "text": "Web & desktop Roblox creator tools launch at bypass.arrrstudio.com, with Free, Pro and Studio plans."
+      },
+      {
+        "when": "Now",
+        "title": "Arrveil.store",
+        "text": "Kits, tools and digital products come together in one marketplace."
+      }
+    ]
+  },
+  "closing": {
+    "title": "Start at the store. Finish with a license.",
+    "text": "Pick a kit on Arrveil.store, activate its license, then publish. Need a website or a custom system? Reach us on Discord.",
+    "store": "Open Arrveil.store",
+    "discord": "Join Discord"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "by": "Built by"
+  }
+}
