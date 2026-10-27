@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
   if (!hasLocale(lang)) return {};
   const t = getDictionary(lang);
   return {
-    title: t.meta.title,
+    title: { default: t.meta.title, template: "%s ✦ ArrrStudio" },
     description: t.meta.description,
     alternates: { languages: { id: "/id", en: "/en" } },
     openGraph: { title: t.meta.title, description: t.meta.description, type: "website" },

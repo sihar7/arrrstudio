@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1a1b1e"/>
+      <stop offset="1" stop-color="#08090a"/>
+    </linearGradient>
+    <linearGradient id="chrome" x1="0.15" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.38" stop-color="#c3c8d0"/>
+      <stop offset="0.55" stop-color="#9ba1ab"/>
+      <stop offset="0.72" stop-color="#e3e6ea"/>
+      <stop offset="1" stop-color="#8a8f98"/>
+    </linearGradient>
+    <radialGradient id="star" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.35" stop-color="#ff6f8a"/>
+      <stop offset="1" stop-color="#a3243b"/>
+    </radialGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#bg)"/>
+  <rect x="0.5" y="0.5" width="63" height="63" rx="13.5" fill="none" stroke="#383b3f"/>
+  <g stroke="#b3283f" stroke-width="1" stroke-linejoin="round" fill="url(#chrome)">
+    <path d="M5 54 36.5 10 60 48 49 48 36.5 27 19.6 50.5Z"/>
+    <path d="M11 55.5 45 45 43.4 40.4 21.5 47.6Z"/>
+  </g>
+  <path fill="url(#star)" d="M37.5 30 39.1 35.9 45 37.5 39.1 39.1 37.5 45 35.9 39.1 30 37.5 35.9 35.9Z"/>
+</svg>

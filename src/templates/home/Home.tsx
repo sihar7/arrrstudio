@@ -11,6 +11,8 @@ import Closing from "./_components/Closing";
 import Marquee from "./_components/Marquee";
 import SpotlightTracker from "@/components/motion/SpotlightTracker";
 import BackToTop from "@/components/shared/BackToTop";
+import TabTitle from "@/components/shared/TabTitle";
+import { sections } from "./_constants/sections";
 
 export default function Home({ lang, t }: { lang: Locale; t: Dictionary }) {
   return (
@@ -29,6 +31,7 @@ export default function Home({ lang, t }: { lang: Locale; t: Dictionary }) {
       <Closing t={t} />
       <SpotlightTracker />
       <BackToTop label={t.nav.backToTop} />
+      <TabTitle base={t.meta.title} away={t.meta.away} sections={Object.fromEntries(sections.map((id) => [id, t.nav[id]]))} />
     </>
   );
 }
