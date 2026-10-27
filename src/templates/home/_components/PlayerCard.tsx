@@ -1,9 +1,5 @@
-"use client";
-
 import Image from "next/image";
-import { motion } from "motion/react";
 import Scramble from "@/components/motion/Scramble";
-import { easeOut } from "@/components/motion/ease";
 import { Catalog, Studio } from "@/config/studio";
 import type { Dictionary } from "@/utils/i18n";
 
@@ -55,25 +51,15 @@ export default function PlayerCard({ card, name }: { card: CardText; name: NameT
 
       <div className="p-6 md:p-8">
         <p className="font-mono text-xs text-[var(--fog)]">{card.merge}</p>
-        <motion.p
-          aria-label="Arrr + Studio = ArrrStudio"
-          initial="split"
-          whileInView="merged"
-          viewport={{ once: true, amount: 0.8 }}
-          className="mt-4 flex items-baseline text-[clamp(2.25rem,5vw,3.5rem)] font-[510] leading-none tracking-[-0.022em] text-white"
-        >
+        <p data-reveal aria-label="Arrr + Studio = ArrrStudio" className="merge mt-4 flex items-baseline text-[clamp(2.25rem,5vw,3.5rem)] font-[510] leading-none tracking-[-0.022em] text-white">
           <span aria-hidden>Arrr</span>
-          <motion.span
-            aria-hidden
-            className="inline-block overflow-hidden whitespace-pre text-[var(--maroon-300)]"
-            variants={{ split: { width: "1.6em", opacity: 1 }, merged: { width: "0em", opacity: 0, transition: { delay: 0.9, duration: 0.6, ease: easeOut } } }}
-          >
+          <span aria-hidden className="merge-plus inline-block overflow-hidden whitespace-pre text-[var(--maroon-300)]">
             {" + "}
-          </motion.span>
-          <motion.span aria-hidden variants={{ split: { color: "#8a8f98" }, merged: { color: "#ffffff", transition: { delay: 1.1, duration: 0.5 } } }}>
+          </span>
+          <span aria-hidden className="merge-word">
             Studio
-          </motion.span>
-        </motion.p>
+          </span>
+        </p>
         <p className="mt-4 max-w-[40ch] text-[15px] text-[var(--fog)]">{name.studioText}</p>
       </div>
     </div>

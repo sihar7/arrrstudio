@@ -5,6 +5,8 @@ export const Studio = {
   logo: { src: "/brand/arrr-studio.webp", width: 1650, height: 562 },
   // Huruf A dari logo — dipakai di ukuran kecil (header) karena wordmark penuh tidak terbaca.
   mark: { src: "/brand/arrr-mark.webp", width: 729, height: 418 },
+  // Siluet mark kecil (±2 KB) untuk mask efek kilau logo.
+  markMask: "/brand/arrr-mark-mask.webp",
   foundedYear: 2026,
   city: "Bandung",
   country: "ID",

@@ -13,6 +13,7 @@ export default function LangSwitch({ lang, label }: { lang: Locale; label: strin
           key={code}
           href={`/${code}`}
           scroll={false}
+          prefetch={false}
           hrefLang={code}
           onClick={() => rememberLocale(code)}
           aria-current={code === lang ? "true" : undefined}

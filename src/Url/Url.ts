@@ -8,4 +8,9 @@ export const Url = {
   founderGithub: "https://github.com/sihar7",
 } as const;
 
+// Alamat situs untuk URL absolut (og:image, canonical). Set NEXT_PUBLIC_SITE_URL setelah domain final ada.
+export const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "http://localhost:3000");
+
 export const host = (url: string) => new URL(url).host.replace(/^www\./, "");

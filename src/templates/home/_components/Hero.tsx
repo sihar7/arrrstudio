@@ -3,8 +3,6 @@ import ActionLink from "@/components/shared/ActionLink";
 import { Studio } from "@/config/studio";
 import { Url } from "@/Url/Url";
 import type { Dictionary } from "@/utils/i18n";
-import Reveal from "@/components/motion/Reveal";
-import SplitText from "@/components/motion/SplitText";
 import { Stagger, StaggerItem } from "@/components/motion/Stagger";
 import TiltOnScroll from "@/components/motion/TiltOnScroll";
 import HeroScene from "./HeroScene";
@@ -25,12 +23,12 @@ export default function Hero({ t }: { t: Dictionary }) {
       <div className="mx-auto max-w-[1200px] px-5 pt-14 md:px-8 md:pt-24">
         <div className="grid gap-8 md:grid-cols-12 md:items-end">
           <div className="md:col-span-8">
-            <Reveal y={10}>
-              <p className="font-mono text-xs text-ink-3">{t.hero.eyebrow}</p>
-            </Reveal>
-            <SplitText as="h1" id="hero-title" onMount delay={0.1} text={t.hero.title} className="mt-5 text-[clamp(2.5rem,6vw,4.5rem)] font-[510] leading-none tracking-[-0.022em]" />
+            <p className="font-mono text-xs text-ink-3">{t.hero.eyebrow}</p>
+            <h1 id="hero-title" className="mt-5 text-[clamp(2.5rem,6vw,4.5rem)] font-[510] leading-none tracking-[-0.022em]">
+              {t.hero.title}
+            </h1>
           </div>
-          <Reveal delay={0.45} className="md:col-span-4">
+          <div className="md:col-span-4">
             <p className="text-ink-3">{t.hero.lead}</p>
             <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
               <ActionLink href={Url.store}>{t.hero.primary}</ActionLink>
@@ -44,7 +42,7 @@ export default function Hero({ t }: { t: Dictionary }) {
                 <ArrowRight aria-hidden width={16} height={16} strokeWidth={1.6} className="transition-transform duration-200 group-hover:translate-x-0.5" />
               </a>
             </div>
-          </Reveal>
+          </div>
         </div>
 
         <TiltOnScroll className="mt-14 md:-mx-6 md:mt-20">
@@ -60,24 +58,24 @@ export default function Hero({ t }: { t: Dictionary }) {
             </span>
           </figcaption>
 
-          <div className="relative aspect-[4/3] bg-[radial-gradient(80%_70%_at_50%_45%,#1a1b1e,#0b0c0d)] sm:aspect-[16/8]">
+          <div className="relative aspect-[4/3] [background:var(--stage)] sm:aspect-[16/8]">
             <HeroScene label={t.hero.sceneLabel} />
 
-            <dl className="pointer-events-none absolute bottom-4 left-4 flex gap-6 font-mono text-xs text-[var(--fog)] sm:bottom-6 sm:left-6">
+            <dl className="pointer-events-none absolute bottom-4 left-4 flex gap-6 font-mono text-xs text-[var(--stage-meta)] sm:bottom-6 sm:left-6">
               <div>
                 <dt>Est.</dt>
-                <dd className="mt-1 text-[var(--mist)]">{Studio.foundedYear}</dd>
+                <dd className="mt-1 text-[var(--stage-strong)]">{Studio.foundedYear}</dd>
               </div>
               <div>
                 <dt>City</dt>
-                <dd className="mt-1 text-[var(--mist)]">{Studio.city}</dd>
+                <dd className="mt-1 text-[var(--stage-strong)]">{Studio.city}</dd>
               </div>
               <div>
                 <dt>By</dt>
-                <dd className="mt-1 text-[var(--mist)]">{Studio.founder.initials}</dd>
+                <dd className="mt-1 text-[var(--stage-strong)]">{Studio.founder.initials}</dd>
               </div>
             </dl>
-            <p className="pointer-events-none absolute bottom-4 right-4 hidden font-mono text-xs text-[var(--fog)] sm:bottom-6 sm:right-6 [@media(pointer:fine)]:sm:block">
+            <p className="pointer-events-none absolute bottom-4 right-4 hidden font-mono text-xs text-[var(--stage-meta)] sm:bottom-6 sm:right-6 [@media(pointer:fine)]:sm:block">
               {t.hero.sceneHint}
             </p>
           </div>

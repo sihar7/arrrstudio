@@ -5,7 +5,7 @@ export default function Marquee({ caption }: { caption: string }) {
   const names = Catalog.flatMap((g) => g.items);
 
   return (
-    <section aria-label={caption} className="border-y-[0.5px] border-line py-8">
+    <section aria-label={caption} className="py-8">
       <p className="mx-auto max-w-[1200px] px-5 font-mono text-xs text-ink-3 md:px-8">{caption}</p>
       <div className="marquee relative mt-5 overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_10%,#000_90%,transparent)]">
         <ul className="marquee-track flex w-max">

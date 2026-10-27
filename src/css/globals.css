@@ -20,31 +20,42 @@
   --maroon-700: #741a2b;
 }
 
-/* ── Semantic: terang (silver) — peran token sama dengan gelap ── */
+/* ── Semantic: terang ("paper & silver studio") — peran token sama dengan gelap ── */
 :root,
 [data-theme="light"] {
   color-scheme: light;
-  --canvas: #eceef1;
-  --surface: #f7f8f9;
-  --sunken: #e2e5ea;
-  --tint: rgb(8 9 10 / 0.05);
-  --ink: var(--void);
-  --ink-2: #2e3137;
-  --ink-3: #575b62;
-  --line: #d0d6e0;
-  --line-strong: #b3bac5;
+  --canvas: #ffffff;
+  --surface: #ffffff;
+  --sunken: #f1f2f5;
+  --tint: rgb(11 12 14 / 0.045);
+  --ink: #0b0c0e;
+  --ink-2: #3a3e45;
+  --ink-3: #62676f;
+  --line: #e6e8ec;
+  --line-strong: #d3d7de;
   --accent: var(--maroon-700);
   --accent-hover: var(--maroon-600);
   --accent-ink: #ffffff;
   --neutral-cta: var(--void);
   --neutral-cta-ink: var(--paper);
-  --floor: linear-gradient(180deg, transparent 10%, #c9ced8 100%);
-  --spot-edge: rgb(8 9 10 / 0.45);
+  --floor: linear-gradient(180deg, transparent 0%, #eef0f3 100%);
+  --spot-edge: rgb(11 12 14 / 0.28);
+  --spot-fill: rgb(240 242 245 / 0.7);
   --surface-hi: #ffffff;
-  --inner-hi: rgb(255 255 255 / 0.9);
-  --drop: rgb(30 34 44 / 0.22);
-  --chrome-edge: linear-gradient(150deg, #ffffff 0%, #c9ced8 30%, #b3bac5 62%, rgb(116 26 43 / 0.55) 100%);
-  --spot-fill: rgb(255 255 255 / 0.6);
+  --inner-hi: rgb(255 255 255 / 1);
+  --drop: rgb(20 24 32 / 0.1);
+  --chrome-edge: linear-gradient(150deg, #e9ecf0 0%, #dde1e7 35%, #d3d8df 65%, rgb(116 26 43 / 0.35) 100%);
+  --stage: radial-gradient(80% 75% at 50% 40%, #ffffff 0%, #e9ecf0 70%, #dfe3e8 100%);
+  --stage-meta: #6a6f77;
+  --stage-strong: #0b0c0e;
+  --code-bg: linear-gradient(180deg, #fbfbfc, #f6f7f9);
+  --code-text: #2b2f36;
+  --code-strong: #0b0c0e;
+  --code-muted: #6a6f77;
+  --code-gutter: #a7acb5;
+  --code-keyword: var(--maroon-700);
+  --code-bar: rgb(11 12 14 / 0.08);
+  --code-chip: rgb(11 12 14 / 0.05);
   --focus: var(--maroon-600);
 }
 
@@ -72,6 +83,17 @@
   --drop: rgb(0 0 0 / 0.6);
   --chrome-edge: linear-gradient(150deg, rgb(229 229 230 / 0.45) 0%, rgb(56 59 63 / 0.7) 28%, rgb(35 37 42 / 0.9) 62%, rgb(163 36 59 / 0.6) 100%);
   --spot-fill: rgb(255 255 255 / 0.035);
+  --stage: radial-gradient(80% 70% at 50% 45%, #1a1b1e, #0b0c0d);
+  --stage-meta: var(--fog);
+  --stage-strong: var(--mist);
+  --code-bg: linear-gradient(180deg, #141518, #0c0d0e);
+  --code-text: var(--mist);
+  --code-strong: #ffffff;
+  --code-muted: var(--fog);
+  --code-gutter: var(--ash);
+  --code-keyword: var(--maroon-300);
+  --code-bar: rgb(255 255 255 / 0.1);
+  --code-chip: rgb(255 255 255 / 0.05);
   --focus: var(--maroon-300);
 }
 
@@ -91,7 +113,7 @@
   --color-neutral-cta: var(--neutral-cta);
   --color-neutral-cta-ink: var(--neutral-cta-ink);
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-mono-face), ui-monospace, monospace;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", "Roboto Mono", Menlo, Consolas, monospace;
   --radius-card: 12px;
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
 }
@@ -130,10 +152,6 @@ h3 {
   text-wrap: balance;
 }
 
-p {
-  text-wrap: pretty;
-}
-
 /* ── Panel bertepi chrome: silver mengilap di kiri-atas → rim maroon di kanan-bawah (bevel logo) ── */
 .frame {
   border: 1px solid transparent;
@@ -146,7 +164,20 @@ p {
     0 40px 80px -40px var(--drop);
 }
 
-/* Panel kode & kartu pemain selalu gelap (layar editor / HUD game) di kedua tema */
+/* Editor kode: terang/gelap mengikuti tema, tepi chrome tetap */
+.frame-code {
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background:
+    var(--code-bg) padding-box,
+    var(--chrome-edge) border-box;
+  box-shadow:
+    inset 0 1px 0 var(--inner-hi),
+    0 40px 80px -40px var(--drop);
+  color: var(--code-text);
+}
+
+/* Kartu pemain selalu gelap (layar editor / HUD game) di kedua tema */
 .frame-dark {
   border: 1px solid transparent;
   border-radius: 12px;
@@ -157,6 +188,92 @@ p {
     inset 0 1px 0 rgb(255 255 255 / 0.06),
     0 40px 80px -36px rgb(0 0 0 / 0.55);
   color: var(--mist);
+}
+
+/* ── Pita section: tiap pita menimpa token semantik, komponen di dalamnya ikut otomatis ── */
+.tone-base,
+.tone-raised,
+.tone-inverse,
+.tone-brand {
+  background: var(--canvas);
+  color: var(--ink);
+}
+
+[data-theme="dark"] .tone-raised {
+  --canvas: #121316;
+  --surface: #18191c;
+  --surface-hi: #1d1e22;
+  --sunken: #202125;
+  background: linear-gradient(180deg, #131417 0%, #0f1012 100%);
+  box-shadow:
+    inset 0 0.5px 0 var(--graphite),
+    inset 0 -0.5px 0 var(--graphite);
+}
+
+[data-theme="light"] .tone-raised {
+  --canvas: #f6f7f9;
+  --surface: #ffffff;
+  --surface-hi: #ffffff;
+  background: linear-gradient(180deg, #f8f9fa 0%, #f3f4f7 100%);
+  box-shadow:
+    inset 0 1px 0 #e6e8ec,
+    inset 0 -1px 0 #e6e8ec;
+}
+
+/* Pita terbalik: silver logam di tema gelap, graphite di tema terang */
+[data-theme="dark"] .tone-inverse {
+  --canvas: #e4e7ec;
+  --surface: #f4f5f7;
+  --surface-hi: #ffffff;
+  --sunken: #d6dae1;
+  --tint: rgb(8 9 10 / 0.06);
+  --ink: #08090a;
+  --ink-2: #2e3137;
+  --ink-3: #50545b;
+  --line: #c4cad4;
+  --line-strong: #a6adb8;
+  --accent: var(--maroon-700);
+  --accent-hover: var(--maroon-600);
+  --spot-edge: rgb(8 9 10 / 0.45);
+  --spot-fill: rgb(255 255 255 / 0.6);
+  --inner-hi: rgb(255 255 255 / 0.9);
+  --drop: rgb(30 34 44 / 0.25);
+  --chrome-edge: linear-gradient(150deg, #ffffff 0%, #c9ced8 30%, #a6adb8 62%, rgb(116 26 43 / 0.55) 100%);
+  background: linear-gradient(180deg, #eef0f3 0%, #dfe3e8 100%);
+}
+
+/* Di tema terang pita "terbalik" = silver logam lembut, bukan blok hitam */
+[data-theme="light"] .tone-inverse {
+  --canvas: #e9ecf0;
+  --surface: #ffffff;
+  --surface-hi: #ffffff;
+  --sunken: #dde1e7;
+  --line: #d3d8df;
+  --line-strong: #bcc2cc;
+  background: linear-gradient(180deg, #eef0f3 0%, #e2e6eb 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.9),
+    inset 0 -1px 0 #d3d8df;
+}
+
+/* Pita brand penutup: maroon gelap di kedua tema; aksi utama berganti putih agar tetap kontras */
+.tone-brand {
+  --canvas: #12070a;
+  --surface: #1a0b10;
+  --surface-hi: #200d13;
+  --tint: rgb(255 255 255 / 0.07);
+  --ink: #ffffff;
+  --ink-2: #e7d9dc;
+  --ink-3: #c2a9af;
+  --line: rgb(255 255 255 / 0.12);
+  --line-strong: rgb(255 255 255 / 0.22);
+  --accent: #ffffff;
+  --accent-hover: #e5e5e6;
+  --accent-ink: #12070a;
+  --focus: #ffffff;
+  background:
+    radial-gradient(90% 70% at 50% 0%, #4a1120 0%, transparent 70%),
+    linear-gradient(180deg, #2a0b14 0%, #12070a 100%);
 }
 
 /* Lantai atmosfer — satu-satunya gradien, khusus di bawah showcase hero */
@@ -205,31 +322,39 @@ p {
 }
 
 /* ── Logo hidup: kilau menyapu chrome + bintang maroon berkedip ── */
+/* Kilau: strip gradien digeser dengan transform (compositor), dibatasi bentuk mark lewat mask */
 .logo-shine {
-  background: linear-gradient(105deg, transparent 38%, rgb(255 255 255 / 0.95) 50%, transparent 62%) no-repeat;
-  background-size: 260% 100%;
-  background-position: 160% 0;
+  overflow: hidden;
   mask-size: contain;
   mask-repeat: no-repeat;
   mask-position: center;
   -webkit-mask-size: contain;
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: center;
+}
+
+.logo-shine::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 60%;
+  background: linear-gradient(105deg, transparent 0%, rgb(255 255 255 / 0.9) 50%, transparent 100%);
   mix-blend-mode: overlay;
+  transform: translateX(-120%);
   animation: logo-shine 5s cubic-bezier(0.45, 0, 0.2, 1) infinite;
 }
 
-.logo-lockup:hover .logo-shine {
+.logo-lockup:hover .logo-shine::before {
   animation-duration: 1.4s;
 }
 
 @keyframes logo-shine {
   0%,
   62% {
-    background-position: 160% 0;
+    transform: translateX(-120%);
   }
   100% {
-    background-position: -60% 0;
+    transform: translateX(220%);
   }
 }
 
@@ -251,6 +376,190 @@ p {
   }
 }
 
+/* ── Sistem animasi CSS: kelas .in dipasang RevealObserver; konten hanya disembunyikan bila JS aktif ── */
+:root {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html.js .a-rise,
+html.js .a-pop,
+html.js .a-line,
+html.js .a-word {
+  transition:
+    opacity 0.8s var(--ease-out),
+    transform 0.9s var(--ease-out);
+  transition-delay: calc(var(--delay, 0ms) + var(--i, 0) * var(--stagger, 50ms));
+}
+
+html.js .a-rise {
+  opacity: 0;
+  transform: translateY(var(--y, 28px));
+}
+
+html.js .a-pop {
+  opacity: 0;
+  transform: scale(0.86);
+}
+
+html.js .a-line {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+
+html.js .a-word {
+  transform: translateY(110%);
+}
+
+html.js .in.a-rise,
+html.js .in .a-rise,
+html.js .in.a-pop,
+html.js .in .a-pop,
+html.js .in .a-line,
+html.js .in .a-word {
+  opacity: 1;
+  transform: none;
+}
+
+/* Jeda bergiliran untuk anak .stagger (tanpa perlu indeks dari React) */
+.stagger > :nth-child(2) { --i: 1; }
+.stagger > :nth-child(3) { --i: 2; }
+.stagger > :nth-child(4) { --i: 3; }
+.stagger > :nth-child(5) { --i: 4; }
+.stagger > :nth-child(6) { --i: 5; }
+.stagger > :nth-child(7) { --i: 6; }
+.stagger > :nth-child(8) { --i: 7; }
+.stagger > :nth-child(9) { --i: 8; }
+.stagger > :nth-child(10) { --i: 9; }
+.stagger > :nth-child(11) { --i: 10; }
+.stagger > :nth-child(12) { --i: 11; }
+.stagger > :nth-child(13) { --i: 12; }
+.stagger > :nth-child(14) { --i: 13; }
+.stagger > :nth-child(15) { --i: 14; }
+.stagger > :nth-child(n + 16) { --i: 15; }
+
+/* "Arrr" + "Studio" menyatu jadi ArrrStudio */
+.merge-plus {
+  width: 1.6em;
+  transition:
+    width 0.6s var(--ease-out) 0.9s,
+    opacity 0.6s var(--ease-out) 0.9s;
+}
+
+.merge-word {
+  color: var(--fog);
+  transition: color 0.5s ease 1.1s;
+}
+
+.merge.in .merge-plus {
+  width: 0;
+  opacity: 0;
+}
+
+.merge.in .merge-word {
+  color: #ffffff;
+}
+
+/* Kartu miring mengikuti kursor (nilai --rx/--ry dari TiltCard) */
+.tilt-card {
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.5s var(--ease-out);
+  transform-style: preserve-3d;
+}
+
+/* Gerak terikat scroll (Chrome/Edge/Safari baru); browser lain tampil statis */
+@supports (animation-timeline: view()) {
+  .tilt-scroll {
+    transform-origin: 50% 0%;
+    animation: tilt-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 40%;
+  }
+
+  @keyframes tilt-in {
+    from {
+      transform: rotateX(28deg) scale(0.9);
+    }
+    to {
+      transform: none;
+    }
+  }
+
+  .parallax {
+    animation: parallax linear both;
+    animation-timeline: view();
+  }
+
+  @keyframes parallax {
+    from {
+      translate: 0 calc(var(--px) * -1);
+    }
+    to {
+      translate: 0 var(--px);
+    }
+  }
+
+  .line-fill-x,
+  .line-fill-y {
+    animation-timeline: view();
+    animation-range: entry 30% cover 60%;
+    animation-fill-mode: both;
+    animation-timing-function: linear;
+  }
+
+  .line-fill-x {
+    animation-name: fill-x;
+  }
+
+  .line-fill-y {
+    animation-name: fill-y;
+  }
+
+  @keyframes fill-x {
+    from {
+      transform: scaleX(0);
+    }
+  }
+
+  @keyframes fill-y {
+    from {
+      transform: scaleY(0);
+    }
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  .btt-progress {
+    stroke-dasharray: 1;
+    animation: btt-progress linear both;
+    animation-timeline: scroll(root);
+  }
+
+  @keyframes btt-progress {
+    from {
+      stroke-dashoffset: 1;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+}
+
+/* ── Mark statis hero (HP / sebelum 3D siap): melayang pelan, murni compositor ── */
+.hero-mark-idle {
+  translate: -50% -50%;
+  animation: mark-float 6s ease-in-out infinite;
+}
+
+@keyframes mark-float {
+  0%,
+  100% {
+    transform: translateY(-6px) rotate(-1.5deg);
+  }
+  50% {
+    transform: translateY(6px) rotate(1.5deg);
+  }
+}
+
 /* ── Strip produk berjalan (pengganti logo bar pelanggan) ── */
 @keyframes marquee {
   to {
@@ -267,11 +576,25 @@ p {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html.js .a-rise,
+  html.js .a-pop,
+  html.js .a-line,
+  html.js .a-word {
+    opacity: 1;
+    transform: none;
+  }
+
+
   html {
     scroll-behavior: auto;
   }
+  .tilt-scroll,
+  .parallax,
+  .line-fill-x,
+  .line-fill-y,
   .marquee-track,
-  .logo-shine,
+  .hero-mark-idle,
+  .logo-shine::before,
   .logo-star {
     animation: none;
   }

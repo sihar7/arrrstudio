@@ -10,7 +10,7 @@ export default function Closing({ t }: { t: Dictionary }) {
   const links = [Url.store, Url.license, Url.converter, Url.discord];
 
   return (
-    <footer className="border-t-[0.5px] border-line-strong">
+    <footer>
       <div className="mx-auto max-w-[1200px] px-5 py-16 md:px-8 md:py-24">
         <div className="grid gap-8 md:grid-cols-12">
           <SplitText text={t.closing.title} className="text-[clamp(2.2rem,5vw,4.5rem)] font-[510] leading-none tracking-[-0.022em] md:col-span-8" />

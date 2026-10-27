@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 export function LogoLockup({ className, height = 30, priority = false }: { className?: string; height?: number; priority?: boolean }) {
   const { src, width: w, height: h } = Studio.mark;
   const width = Math.round((height * w) / h);
-  const mask = { maskImage: `url(${src})`, WebkitMaskImage: `url(${src})` } as CSSProperties;
+  const mask = { maskImage: `url(${Studio.markMask})`, WebkitMaskImage: `url(${Studio.markMask})` } as CSSProperties;
 
   return (
     <span className={cn("logo-lockup group inline-flex items-center gap-2.5", className)}>

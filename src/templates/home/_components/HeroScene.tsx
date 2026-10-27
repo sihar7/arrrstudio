@@ -16,7 +16,11 @@ export default function HeroScene({ label }: { label: string }) {
     let disposed = false;
     let cleanup = () => {};
 
-    (async () => {
+    // 3D hanya untuk desktop bermouse; HP & hemat-data memakai mark statis (performa mobile).
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+    if (!window.matchMedia("(min-width: 768px) and (pointer: fine)").matches || connection?.saveData) return;
+
+    const boot = async () => {
       const THREE = await import("three");
       const { RoomEnvironment } = await import("three/examples/jsm/environments/RoomEnvironment.js");
       if (disposed) return;
@@ -103,6 +107,22 @@ export default function HeroScene({ label }: { label: string }) {
       backRim.position.set(1.8, 1.2, -1.6);
       scene.add(key, glow, backRim);
 
+      // ── Pencahayaan per tema: di latar terang chrome butuh pantulan lebih kuat & glow maroon diredam ──
+      const applyTheme = () => {
+        const light = document.documentElement.dataset.theme === "light";
+        renderer.toneMappingExposure = light ? 1.05 : 0.85;
+        scene.environmentIntensity = light ? 1.3 : 0.55;
+        chrome.color.setHex(light ? 0xd9dde4 : 0xaeb3bc);
+        chrome.roughness = light ? 0.3 : 0.26;
+        glow.intensity = light ? 2.5 : 6;
+        backRim.intensity = light ? 7 : 18;
+        rimMat.emissiveIntensity = light ? 0.6 : 0.9;
+        renderer.render(scene, camera);
+      };
+      applyTheme();
+      const themeObserver = new MutationObserver(applyTheme);
+      themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
       // ── Interaksi & loop ──
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const pointer = { x: 0, y: 0 };
@@ -177,6 +197,7 @@ export default function HeroScene({ label }: { label: string }) {
       cleanup = () => {
         stop();
         intersection.disconnect();
+        themeObserver.disconnect();
         resizeObserver.disconnect();
         document.removeEventListener("visibilitychange", onVisibility);
         el.removeEventListener("pointermove", onPointer);
@@ -186,10 +207,22 @@ export default function HeroScene({ label }: { label: string }) {
         renderer.dispose();
         renderer.domElement.remove();
       };
-    })();
+    };
+
+    // Dimuat pada interaksi pertama (gerak mouse, scroll, keyboard) agar tidak membebani render awal.
+    const events = ["pointermove", "wheel", "keydown", "touchstart", "scroll"] as const;
+    let started = false;
+    const start = () => {
+      if (started) return;
+      started = true;
+      events.forEach((ev) => window.removeEventListener(ev, start));
+      void boot();
+    };
+    events.forEach((ev) => window.addEventListener(ev, start, { passive: true, once: true }));
 
     return () => {
       disposed = true;
+      events.forEach((ev) => window.removeEventListener(ev, start));
       cleanup();
     };
   }, []);
@@ -201,8 +234,9 @@ export default function HeroScene({ label }: { label: string }) {
         alt=""
         width={729}
         height={418}
-        priority
-        className={cn("absolute left-1/2 top-1/2 h-auto w-[46%] max-w-[360px] -translate-x-1/2 -translate-y-1/2 transition-opacity duration-500", ready && "opacity-0")}
+        sizes="(min-width: 768px) 360px, 46vw"
+        fetchPriority="low"
+        className={cn("hero-mark-idle absolute left-1/2 top-1/2 h-auto w-[46%] max-w-[360px] transition-opacity duration-500", ready && "opacity-0")}
       />
     </div>
   );
