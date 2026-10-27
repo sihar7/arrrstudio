@@ -1,4 +1,4 @@
-﻿// Semua tautan keluar ArrrStudio dikumpulkan di sini supaya cukup diganti di satu tempat.
+// Semua tautan keluar ArrrStudio dikumpulkan di sini supaya cukup diganti di satu tempat.
 export const Url = {
   store: "https://www.arrveilstore.my.id/",
   license: "https://arrstudioweb.vercel.app/en",
