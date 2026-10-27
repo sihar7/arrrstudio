@@ -24,20 +24,26 @@ export default function Home({ lang, t }: { lang: Locale; t: Dictionary }) {
         <div className="tone-raised">
           <Marquee caption={t.hero.strip} />
         </div>
-        <About t={t.about} />
-        <div className="tone-inverse">
+        <div className="cv-auto">
+          <About t={t.about} />
+        </div>
+        <div className="tone-inverse cv-auto">
           <Philosophy t={t.philosophy} />
         </div>
-        <Founder t={t.founder} />
-        <div className="tone-raised">
+        <div className="cv-auto">
+          <Founder t={t.founder} />
+        </div>
+        <div className="tone-raised cv-auto">
           <Ecosystem t={t.ecosystem} />
         </div>
-        <Catalog t={t.catalog} />
-        <div className="tone-raised">
+        <div className="cv-auto">
+          <Catalog t={t.catalog} />
+        </div>
+        <div className="tone-raised cv-auto">
           <Timeline t={t.timeline} />
         </div>
       </main>
-      <div className="tone-brand">
+      <div className="tone-brand cv-auto">
         <Closing t={t} />
       </div>
       <SpotlightTracker />

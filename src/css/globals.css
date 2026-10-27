@@ -161,7 +161,7 @@ h3 {
     var(--chrome-edge) border-box;
   box-shadow:
     inset 0 1px 0 var(--inner-hi),
-    0 40px 80px -40px var(--drop);
+    0 24px 48px -28px var(--drop);
 }
 
 /* Editor kode: terang/gelap mengikuti tema, tepi chrome tetap */
@@ -173,7 +173,7 @@ h3 {
     var(--chrome-edge) border-box;
   box-shadow:
     inset 0 1px 0 var(--inner-hi),
-    0 40px 80px -40px var(--drop);
+    0 24px 48px -28px var(--drop);
   color: var(--code-text);
 }
 
@@ -186,8 +186,14 @@ h3 {
     linear-gradient(150deg, rgb(229 229 230 / 0.55) 0%, rgb(56 59 63 / 0.7) 28%, rgb(35 37 42 / 0.9) 62%, rgb(163 36 59 / 0.75) 100%) border-box;
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 0.06),
-    0 40px 80px -36px rgb(0 0 0 / 0.55);
+    0 24px 48px -24px rgb(0 0 0 / 0.5);
   color: var(--mist);
+}
+
+/* Section di bawah lipatan tidak di-style/layout/paint sampai mendekati viewport (performa awal) */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1000px;
 }
 
 /* ── Pita section: tiap pita menimpa token semantik, komponen di dalamnya ikut otomatis ── */

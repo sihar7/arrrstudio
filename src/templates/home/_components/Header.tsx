@@ -35,7 +35,7 @@ export default function Header({ lang, t }: { lang: Locale; t: Dictionary["nav"]
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 bg-canvas/85 backdrop-blur-md transition-shadow duration-200",
+        "sticky top-0 z-40 bg-canvas transition-shadow duration-200",
         (scrolled || open) && "shadow-[0_0.5px_0_var(--line-strong)]",
       )}
     >
