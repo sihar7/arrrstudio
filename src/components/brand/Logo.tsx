@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 // Lockup kecil: mark "A" chrome + teks ArrrStudio. Kilau cahaya menyapu chrome (di-mask bentuk mark)
 // dan bintang maroon berkedip — logo terasa hidup tapi teks tetap jelas di ukuran header.
-export function LogoLockup({ className, height = 26, priority = false }: { className?: string; height?: number; priority?: boolean }) {
+export function LogoLockup({ className, height = 30, priority = false }: { className?: string; height?: number; priority?: boolean }) {
   const { src, width: w, height: h } = Studio.mark;
   const width = Math.round((height * w) / h);
   const mask = { maskImage: `url(${src})`, WebkitMaskImage: `url(${src})` } as CSSProperties;
