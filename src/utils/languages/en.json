@@ -117,7 +117,7 @@
   },
   "ecosystem": {
     "label": "Ecosystem",
-    "title": "Three doors, one studio.",
+    "title": "Five doors, one studio.",
     "lead": "Each ArrrStudio service has its own home. Pick the one you need.",
     "items": {
       "store": {
@@ -131,6 +131,10 @@
       "converter": {
         "name": "ARRR Studio Bypass",
         "text": "Roblox creator tools on web and desktop: YouTube to Roblox-ready audio, panoramas to 6-sided Skyboxes, background removal, image upscaling and a 10-layer Luau obfuscator."
+      },
+      "databridge": {
+        "name": "ARRR DataBridge",
+        "text": "Migrate, verify and inspect Roblox DataStores through the official Open Cloud API: move player data between universes safely, with team workspaces and progress you can track."
       },
       "discord": {
         "name": "Discord community",
@@ -172,6 +176,11 @@
         "when": "Oct 2026",
         "title": "ARRR Studio Bypass",
         "text": "Web & desktop Roblox creator tools launch at bypass.arrrstudio.com, with Free, Pro and Studio plans."
+      },
+      {
+        "when": "Oct 2026",
+        "title": "ARRR DataBridge",
+        "text": "Roblox DataStore migration and inspection launches at databridge.arrrstudio.com, built on the official Open Cloud API."
       },
       {
         "when": "Now",

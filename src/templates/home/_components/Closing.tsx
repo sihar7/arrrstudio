@@ -7,7 +7,7 @@ import { host, Url } from "@/Url/Url";
 import type { Dictionary } from "@/utils/i18n";
 
 export default function Closing({ t }: { t: Dictionary }) {
-  const links = [Url.store, Url.license, Url.converter, Url.discord];
+  const links = [Url.store, Url.license, Url.converter, Url.databridge, Url.discord];
 
   return (
     <footer>

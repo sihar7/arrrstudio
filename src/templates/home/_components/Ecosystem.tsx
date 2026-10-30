@@ -1,4 +1,4 @@
-import { AppWindow, ArrowUpRight, Discord, Key, Shop } from "iconoir-react";
+import { AppWindow, ArrowUpRight, Database, Discord, Key, Shop } from "iconoir-react";
 import { Stagger, StaggerItem } from "@/components/motion/Stagger";
 import SectionHead from "@/components/shared/SectionHead";
 import { host, Url } from "@/Url/Url";
@@ -9,7 +9,8 @@ const doors = [
   { key: "store", id: "ARR-101", href: Url.store, Icon: Shop },
   { key: "license", id: "ARR-102", href: Url.license, Icon: Key },
   { key: "converter", id: "ARR-103", href: Url.converter, Icon: AppWindow },
-  { key: "discord", id: "ARR-104", href: Url.discord, Icon: Discord },
+  { key: "databridge", id: "ARR-104", href: Url.databridge, Icon: Database },
+  { key: "discord", id: "ARR-105", href: Url.discord, Icon: Discord },
 ] as const;
 
 export default function Ecosystem({ t }: { t: Dictionary["ecosystem"] }) {

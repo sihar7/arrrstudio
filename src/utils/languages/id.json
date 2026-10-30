@@ -117,7 +117,7 @@
   },
   "ecosystem": {
     "label": "Ekosistem",
-    "title": "Tiga pintu, satu studio.",
+    "title": "Lima pintu, satu studio.",
     "lead": "Setiap layanan ArrrStudio punya rumahnya sendiri. Pilih sesuai yang kamu butuhkan.",
     "items": {
       "store": {
@@ -131,6 +131,10 @@
       "converter": {
         "name": "ARRR Studio Bypass",
         "text": "Alat kreator Roblox di web dan desktop: YouTube jadi audio siap upload ke Roblox, panorama jadi Skybox 6 sisi, hapus background, upscale gambar, dan obfuscator Luau 10 lapis."
+      },
+      "databridge": {
+        "name": "ARRR DataBridge",
+        "text": "Migrasi, verifikasi, dan inspeksi DataStore Roblox lewat Open Cloud API resmi: pindahkan data pemain antar-universe dengan aman, lengkap dengan workspace tim dan progres yang bisa dipantau."
       },
       "discord": {
         "name": "Komunitas Discord",
@@ -172,6 +176,11 @@
         "when": "Okt 2026",
         "title": "ARRR Studio Bypass",
         "text": "Alat kreator Roblox web & desktop diluncurkan di bypass.arrrstudio.com, dengan plan Free, Pro, dan Studio."
+      },
+      {
+        "when": "Okt 2026",
+        "title": "ARRR DataBridge",
+        "text": "Migrasi dan inspeksi DataStore Roblox diluncurkan di databridge.arrrstudio.com, dibangun di atas Open Cloud API resmi."
       },
       {
         "when": "Sekarang",
