@@ -31,7 +31,17 @@
       "Maroon",
       "WebGL"
     ],
-    "strip": "Sudah dirilis ArrrStudio"
+    "releases": {
+      "label": "Rilis terbaru",
+      "all": "Katalog lengkap",
+      "new": "Baru",
+      "kinds": {
+        "databridge": "Migrasi DataStore · Web",
+        "bypass": "Alat kreator · Web & desktop",
+        "clubkit": "Kit game · Berlisensi",
+        "summit": "Kit game · Berlisensi"
+      }
+    }
   },
   "spec": {
     "founded": "Didirikan",
@@ -116,6 +126,7 @@
     "github": "GitHub"
   },
   "ecosystem": {
+    "newBadge": "Baru",
     "label": "Ekosistem",
     "title": "Lima pintu, satu studio.",
     "lead": "Setiap layanan ArrrStudio punya rumahnya sendiri. Pilih sesuai yang kamu butuhkan.",
@@ -130,7 +141,7 @@
       },
       "converter": {
         "name": "ARRR Studio Bypass",
-        "text": "Alat kreator Roblox di web dan desktop: YouTube jadi audio siap upload ke Roblox, panorama jadi Skybox 6 sisi, hapus background, upscale gambar, dan obfuscator Luau 10 lapis."
+        "text": "Alat kreator Roblox di web dan desktop: YouTube atau file audio langsung terbit ke Roblox, spoof audio & animasi jadi ID baru, panorama jadi Skybox 6 sisi, hapus background, dan upscale gambar."
       },
       "databridge": {
         "name": "ARRR DataBridge",

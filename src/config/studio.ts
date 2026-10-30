@@ -51,3 +51,13 @@ export const Catalog: CatalogGroup[] = [
     ],
   },
 ];
+
+export type Release = { id: "databridge" | "bypass" | "clubkit" | "summit"; name: string; date: string; href: "databridge" | "converter" | "store"; isNew?: boolean };
+
+// Rilis terbaru di bawah hero (terbaru dulu). Rilis baru: tambah di paling atas, beri isNew, hapus isNew dari yang lama.
+export const Releases: Release[] = [
+  { id: "databridge", name: "ARRR DataBridge", date: "2026-10-30", href: "databridge", isNew: true },
+  { id: "bypass", name: "ARRR Studio Bypass", date: "2026-10-01", href: "converter" },
+  { id: "clubkit", name: "Club Kit Pro", date: "2026-09-01", href: "store" },
+  { id: "summit", name: "Summit Kit", date: "2026-09-01", href: "store" },
+];

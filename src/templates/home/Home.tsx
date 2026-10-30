@@ -8,7 +8,7 @@ import Ecosystem from "./_components/Ecosystem";
 import Catalog from "./_components/Catalog";
 import Timeline from "./_components/Timeline";
 import Closing from "./_components/Closing";
-import Marquee from "./_components/Marquee";
+import Releases from "./_components/Releases";
 import SpotlightTracker from "@/components/motion/SpotlightTracker";
 import RevealObserver from "@/components/motion/RevealObserver";
 import BackToTop from "@/components/shared/BackToTop";
@@ -22,7 +22,7 @@ export default function Home({ lang, t }: { lang: Locale; t: Dictionary }) {
       <main id="main" tabIndex={-1} className="outline-none">
         <Hero t={t} />
         <div className="tone-raised">
-          <Marquee caption={t.hero.strip} />
+          <Releases lang={lang} t={t.hero.releases} />
         </div>
         <div className="cv-auto">
           <About t={t.about} />

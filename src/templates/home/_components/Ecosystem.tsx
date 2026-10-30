@@ -9,7 +9,7 @@ const doors = [
   { key: "store", id: "ARR-101", href: Url.store, Icon: Shop },
   { key: "license", id: "ARR-102", href: Url.license, Icon: Key },
   { key: "converter", id: "ARR-103", href: Url.converter, Icon: AppWindow },
-  { key: "databridge", id: "ARR-104", href: Url.databridge, Icon: Database },
+  { key: "databridge", id: "ARR-104", href: Url.databridge, Icon: Database, isNew: true },
   { key: "discord", id: "ARR-105", href: Url.discord, Icon: Discord },
 ] as const;
 
@@ -19,7 +19,7 @@ export default function Ecosystem({ t }: { t: Dictionary["ecosystem"] }) {
       <SectionHead id="ecosystem-title" index={sectionIndex("ecosystem")} label={t.label} title={t.title} lead={t.lead} />
 
       <Stagger as="ul" gap={0.09} className="frame mt-12 divide-y-[0.5px] divide-line overflow-hidden">
-        {doors.map(({ key, id, href, Icon }) => {
+        {doors.map(({ key, id, href, Icon, ...door }) => {
           const item = t.items[key];
           return (
             <StaggerItem as="li" key={key}>
@@ -33,6 +33,9 @@ export default function Ecosystem({ t }: { t: Dictionary["ecosystem"] }) {
                 <span className="flex items-center gap-3">
                   <Icon aria-hidden width={18} height={18} strokeWidth={1.5} className="shrink-0 text-ink-3 transition-colors group-hover:text-ink" />
                   <span className="text-[17px] font-[510] tracking-[-0.012em] transition-transform duration-300 group-hover:translate-x-1">{item.name}</span>
+                  {"isNew" in door && (
+                    <span className="shrink-0 rounded-full bg-accent px-2 text-[11px] font-[590] leading-5 text-accent-ink">{t.newBadge}</span>
+                  )}
                 </span>
                 <ArrowUpRight
                   aria-hidden

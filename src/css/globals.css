@@ -566,21 +566,6 @@ html.js .in .a-word {
   }
 }
 
-/* ── Strip produk berjalan (pengganti logo bar pelanggan) ── */
-@keyframes marquee {
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.marquee-track {
-  animation: marquee 48s linear infinite;
-}
-
-.marquee:hover .marquee-track {
-  animation-play-state: paused;
-}
-
 @media (prefers-reduced-motion: reduce) {
   html.js .a-rise,
   html.js .a-pop,
@@ -598,7 +583,6 @@ html.js .in .a-word {
   .parallax,
   .line-fill-x,
   .line-fill-y,
-  .marquee-track,
   .hero-mark-idle,
   .logo-shine::before,
   .logo-star {

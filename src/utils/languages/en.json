@@ -31,7 +31,17 @@
       "Maroon",
       "WebGL"
     ],
-    "strip": "Shipped by ArrrStudio"
+    "releases": {
+      "label": "Latest releases",
+      "all": "Full catalog",
+      "new": "New",
+      "kinds": {
+        "databridge": "DataStore migration · Web",
+        "bypass": "Creator tools · Web & desktop",
+        "clubkit": "Game kit · Licensed",
+        "summit": "Game kit · Licensed"
+      }
+    }
   },
   "spec": {
     "founded": "Founded",
@@ -116,6 +126,7 @@
     "github": "GitHub"
   },
   "ecosystem": {
+    "newBadge": "New",
     "label": "Ecosystem",
     "title": "Five doors, one studio.",
     "lead": "Each ArrrStudio service has its own home. Pick the one you need.",
@@ -130,7 +141,7 @@
       },
       "converter": {
         "name": "ARRR Studio Bypass",
-        "text": "Roblox creator tools on web and desktop: YouTube to Roblox-ready audio, panoramas to 6-sided Skyboxes, background removal, image upscaling and a 10-layer Luau obfuscator."
+        "text": "Roblox creator tools on web and desktop: publish YouTube or your own audio files straight to Roblox, spoof audio & animations to new IDs, turn panoramas into 6-sided Skyboxes, remove backgrounds and upscale images."
       },
       "databridge": {
         "name": "ARRR DataBridge",
