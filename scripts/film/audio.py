@@ -9,7 +9,10 @@ import numpy as np
 
 SR = 48000
 DUR = 24.0
-N = int(SR * DUR)
+# Audio dirender 2 detik lebih panjang; ekornya di-crossfade ke awal → loop video tanpa jeda hening.
+EXT = 2.0
+N = int(SR * (DUR + EXT))
+NOUT = int(SR * DUR)
 CUTS = {"mark": 3.6, "star": 4.6, "word": 5.4, "kits": 7.0, "tools": 10.5, "data": 14.0, "founder": 17.5, "final": 20.5}
 rng = np.random.default_rng(7)
 t = np.arange(N) / SR
@@ -61,7 +64,7 @@ def note(m):
 
 
 # ── 1. Drone sub D1/A1, membengkak pelan ──
-drone_env = env(0.0, 3.0, 22.4, 24.0)
+drone_env = np.ones(N)  # drone tidak pernah putus (loop menyambung lewat crossfade)
 lfo = 1 + 0.15 * np.sin(2 * np.pi * 0.11 * t)
 drone = (np.sin(2 * np.pi * note(26) * t) * 0.55 + np.sin(2 * np.pi * note(33) * t) * 0.35) * drone_env * lfo
 rumble = lowpass_fast(rng.standard_normal(N), 90) * 6
@@ -73,7 +76,7 @@ chords = [
     (3.4, CUTS["tools"], [50, 53, 57, 60, 64]),  # Dm9
     (CUTS["tools"], CUTS["data"], [46, 50, 53, 57, 62]),  # Bbmaj7
     (CUTS["data"], CUTS["final"], [43, 50, 53, 57, 62]),  # Gm9
-    (CUTS["final"], 24.0, [38, 50, 52, 57, 62, 69]),  # Dsus2 — resolusi
+    (CUTS["final"], DUR + EXT, [38, 50, 52, 57, 62, 69]),  # Dsus2 — resolusi, bertahan melewati titik loop
 ]
 
 
@@ -85,7 +88,7 @@ def saw(f, phase=0.0):
 pad_l = np.zeros(N)
 pad_r = np.zeros(N)
 for a, b, notes in chords:
-    e = env(a - 0.3, a + 1.2, b - 0.2, b + 0.8 if b < 24 else 24.0)
+    e = env(a - 0.3, a + 1.2, b - 0.2, b + 0.8 if b < DUR else DUR + EXT + 1)
     for k, m in enumerate(notes):
         f = note(m)
         pad_l += (saw(f * 0.997, 0.1 * k) + saw(f * 1.003, 0.37 * k)) * e * 0.5
@@ -215,10 +218,14 @@ wetL, wetR = conv(L, irL), conv(R, irR)
 L = L + wetL * 0.9
 R = R + wetR * 0.9
 
-# fade masuk/keluar (loop mulus) + master
-fade = np.clip(t / 0.4, 0, 1) * np.clip((DUR - t) / 0.9, 0, 1)
-L *= fade
-R *= fade
+# Loop mulus: ekor setelah detik 24 di-crossfade (equal-power) ke awal, lalu dipotong tepat 24 detik.
+X = int(0.6 * SR)
+k = np.linspace(0, 1, X)
+fin, fout = np.sin(k * np.pi / 2), np.cos(k * np.pi / 2)
+tailL, tailR = L[NOUT : NOUT + X].copy(), R[NOUT : NOUT + X].copy()
+L, R = L[:NOUT].copy(), R[:NOUT].copy()
+L[:X] = L[:X] * fin + tailL * fout
+R[:X] = R[:X] * fin + tailR * fout
 peak = max(np.max(np.abs(L)), np.max(np.abs(R)))
 L = np.tanh(L / peak * 1.25) * 0.89
 R = np.tanh(R / peak * 1.25) * 0.89

@@ -99,12 +99,13 @@ def main():
             m = min(len(clip), n - a)
             voice[a : a + m] += clip[:m]
 
-        # Ducking: amplop suara dihaluskan → musik turun ±9 dB saat narasi bicara.
+        # Ducking halus: amplop suara dihaluskan panjang (tidak naik-turun per kata) → musik turun ±6 dB saja,
+        # supaya musik tidak terasa "berhenti" saat narasi bicara.
         envl = np.abs(voice)
-        k = int(0.25 * SR)
+        k = int(0.6 * SR)
         envl = np.convolve(envl, np.ones(k) / k, mode="same")
-        envl = np.clip(envl / (envl.max() + 1e-9) * 4, 0, 1)
-        duck = 1 - 0.65 * envl
+        envl = np.clip(envl / (envl.max() + 1e-9) * 3, 0, 1)
+        duck = 1 - 0.5 * envl
         mix = music * duck[:, None] * 0.9
         mix[:, 0] += voice * 0.92
         mix[:, 1] += voice * 0.92
