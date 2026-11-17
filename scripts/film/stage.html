@@ -1,0 +1,380 @@
+<!doctype html>
+<!--
+  ArrrStudio — film hero (by ArrrStudio · https://arrrstudio.com · Discord https://discord.gg/mtn3YmwjV)
+  Panggung kanvas deterministik: window.render(t) menggambar frame pada detik t. Dirender per frame oleh render.js.
+  Waktu adegan HARUS sama dengan scripts/film/audio.py (konstanta CUTS).
+-->
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Lexend:wght@300;400;500&family=JetBrains+Mono:wght@400&display=block" rel="stylesheet" />
+<style>
+  html, body { margin: 0; background: #03061a; overflow: hidden; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script>
+const W = 1920, H = 1080, DUR = 24;
+// Titik potong adegan (detik) — sama dengan audio.py
+const CUTS = { mark: 3.6, star: 4.6, word: 5.4, kits: 7.0, tools: 10.5, data: 14.0, founder: 17.5, final: 20.5 };
+const C = { n1000: "#03061a", n950: "#060b1c", n900: "#0a1330", n850: "#0e1a40", n800: "#16245a", n700: "#1f3275", ice: "#7fa2ff", s50: "#f2f4fa", s300: "#b9c1da", s400: "#8790b0", s600: "#5a6584" };
+const cv = document.getElementById("c"), ctx = cv.getContext("2d");
+
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const eOut = (x) => 1 - Math.pow(1 - x, 4);
+const eExpo = (x) => (x >= 1 ? 1 : 1 - Math.pow(2, -10 * x));
+const eInOut = (x) => (x < 0.5 ? 16 * x ** 5 : 1 - Math.pow(-2 * x + 2, 5) / 2);
+const lerp = (a, b, x) => a + (b - a) * x;
+// Noise deterministik halus (untuk waveform/partikel).
+const hash = (n) => { const s = Math.sin(n * 127.1) * 43758.5453; return s - Math.floor(s); };
+const noise = (x) => { const i = Math.floor(x), f = x - i, u = f * f * (3 - 2 * f); return lerp(hash(i), hash(i + 1), u); };
+
+const img = (src) => new Promise((r) => { const i = new Image(); i.onload = () => r(i); i.src = src; });
+let MARK, WORD;
+
+// ── Latar: navy dalam + pita cahaya melengkung seperti di latar logo ──
+function background(t) {
+  const g = ctx.createRadialGradient(W * 0.5, H * 0.46, 40, W * 0.5, H * 0.5, W * 0.72);
+  g.addColorStop(0, C.n850); g.addColorStop(0.45, C.n900); g.addColorStop(1, C.n1000);
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  ctx.save();
+  ctx.globalCompositeOperation = "lighter";
+  const drift = Math.sin(t * 0.25) * 30;
+  for (const [cx, cy, r, a0, a1, al] of [[-260 + drift, -520, 1100, 0.15, 1.15, 0.22], [2200 - drift, 1650, 1150, 3.3, 4.25, 0.2]]) {
+    ctx.beginPath(); ctx.arc(cx, cy, r, a0, a1);
+    ctx.strokeStyle = `rgba(80,115,230,${al})`; ctx.lineWidth = 2; ctx.shadowColor = "rgba(90,130,255,0.9)"; ctx.shadowBlur = 26; ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx, cy, r + 60, a0, a1);
+    ctx.strokeStyle = `rgba(80,115,230,${al * 0.35})`; ctx.lineWidth = 1; ctx.stroke();
+  }
+  ctx.restore();
+  // vignette
+  const v = ctx.createRadialGradient(W / 2, H / 2, H * 0.35, W / 2, H / 2, W * 0.75);
+  v.addColorStop(0, "rgba(0,0,0,0)"); v.addColorStop(1, "rgba(1,3,12,0.75)");
+  ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
+}
+
+// ── Bintang 4 sudut + kilau lensa ──
+function star(x, y, r, alpha, flare = 0) {
+  ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.globalAlpha = alpha;
+  if (flare > 0) {
+    const lg = ctx.createRadialGradient(x, y, 0, x, y, r * 7 * flare);
+    lg.addColorStop(0, "rgba(160,190,255,0.55)"); lg.addColorStop(1, "rgba(60,90,200,0)");
+    ctx.fillStyle = lg; ctx.beginPath(); ctx.arc(x, y, r * 7 * flare, 0, 7); ctx.fill();
+    ctx.fillStyle = "rgba(200,215,255,0.5)";
+    ctx.beginPath(); ctx.ellipse(x, y, r * 16 * flare, r * 0.12, 0, 0, 7); ctx.fill();
+  }
+  ctx.shadowColor = "rgba(170,195,255,1)"; ctx.shadowBlur = r * 0.9; ctx.fillStyle = "#ffffff";
+  ctx.beginPath();
+  const k = 0.16;
+  ctx.moveTo(x, y - r); ctx.quadraticCurveTo(x + r * k, y - r * k, x + r, y); ctx.quadraticCurveTo(x + r * k, y + r * k, x, y + r);
+  ctx.quadraticCurveTo(x - r * k, y + r * k, x - r, y); ctx.quadraticCurveTo(x - r * k, y - r * k, x, y - r); ctx.fill();
+  ctx.restore();
+}
+
+// Mode hero (?hero): versi ambient TANPA tipografi besar — kiri bawah dikosongkan untuk judul web,
+// visual digeser ke kanan atas. Teks bertanda copy:true (judul, subjudul, penghitung, wordmark) dilewati.
+const HERO = new URLSearchParams(location.search).has("hero");
+
+function text(str, x, y, { size = 120, weight = 700, family = "Syncopate", color = C.s50, spacing = 0, align = "left", alpha = 1, copy = false } = {}) {
+  if (HERO && copy) return;
+  ctx.save(); ctx.globalAlpha = alpha; ctx.fillStyle = color; ctx.textAlign = align; ctx.textBaseline = "alphabetic";
+  ctx.font = `${weight} ${size}px ${family}`; ctx.letterSpacing = `${spacing}px`; ctx.fillText(str, x, y); ctx.restore();
+}
+
+// Baris judul yang naik dari balik masker (sama seperti hero web).
+function riseLine(str, x, y, p, opts) {
+  if (HERO) return;
+  const size = opts.size || 120;
+  ctx.save(); ctx.beginPath(); ctx.rect(0, y - size * 1.05, W, size * 1.25); ctx.clip();
+  text(str, x, y + (1 - eExpo(p)) * size * 1.2, opts); ctx.restore();
+}
+
+// ── Kotak mark di layar ──
+// Hero: mark di tengah atas, cukup jauh dari header (y ≥ 200) dan berakhir di atas zona judul web (kiri bawah).
+const MB = { h: HERO ? 330 : 430 }; MB.w = MB.h * 599 / 422; MB.x = W / 2 - MB.w / 2; MB.y = HERO ? 215 : 250;
+const P = (u, v) => [MB.x + u * MB.w, MB.y + v * MB.h];
+const GUIDES = [
+  [[-0.35, 0.995], [1.35, 0.995]], [[-0.25, 0.005], [1.25, 0.005]], [[0.489, -0.3], [0.489, 1.25]],
+  [[0.489, 0.005], [0.03, 1.15]], [[0.489, 0.005], [0.95, 1.15]], [[-0.15, 0.88], [1.05, 0.25]],
+  [[0.91, -0.15], [0.91, 0.62]], [[0.7, 0.272], [1.2, 0.272]], [[0.098, -0.2], [0.098, 1.2]], [[0.876, 0.62], [0.876, 1.2]], [[-0.3, 0.4], [1.3, 0.4]],
+];
+const LABELS = [["A · 1:1", -0.33, 0.97], ["APEX 0.489", 0.51, -0.02], ["ORBIT −27°", -0.12, 0.84], ["✦ 0.910 / 0.272", 0.93, 0.25], ["BASE", 1.2, 0.97]];
+
+function blueprint(t, fade) {
+  ctx.save(); ctx.globalAlpha = fade;
+  ctx.strokeStyle = C.s400; ctx.lineWidth = 1.4; ctx.fillStyle = C.s300;
+  GUIDES.forEach(([a, b], i) => {
+    const p = eOut(seg(t, 0.25 + i * 0.16, 1.15 + i * 0.16));
+    if (p <= 0) return;
+    const [x1, y1] = P(...a), [x2, y2] = P(...b);
+    const x = lerp(x1, x2, p), y = lerp(y1, y2, p);
+    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x, y); ctx.stroke();
+    if (p < 1) { ctx.beginPath(); ctx.arc(x, y, 3.2, 0, 7); ctx.fill(); }
+  });
+  // elips orbit dibangun sebagai busur
+  const op = eOut(seg(t, 1.6, 3.0));
+  if (op > 0) {
+    const [cx, cy] = P(0.44, 0.585);
+    ctx.beginPath(); ctx.ellipse(cx, cy, MB.w * 0.5, MB.h * 0.12, -0.47, Math.PI * 0.9, Math.PI * 0.9 + Math.PI * 2 * op); ctx.stroke();
+    const [sx, sy] = P(0.91, 0.272);
+    ctx.beginPath(); ctx.arc(sx, sy, 44, 0, Math.PI * 2 * op); ctx.stroke();
+  }
+  LABELS.forEach(([s, u, v], i) => {
+    const [x, y] = P(u, v);
+    text(s, x, y, { size: 15, weight: 400, family: "JetBrains Mono", color: C.s400, spacing: 1, alpha: seg(t, 0.8 + i * 0.25, 1.2 + i * 0.25) * 0.9 });
+  });
+  ctx.restore();
+}
+
+const off = document.createElement("canvas"); off.width = Math.ceil(MB.w); off.height = Math.ceil(MB.h);
+const octx = off.getContext("2d");
+function mark(x, y, w, h, alpha, glow, sweep) {
+  if (alpha <= 0) return;
+  octx.clearRect(0, 0, off.width, off.height);
+  octx.globalCompositeOperation = "source-over"; octx.drawImage(MARK, 0, 0, off.width, off.height);
+  if (sweep !== null) {
+    octx.globalCompositeOperation = "source-atop";
+    const sx = lerp(-0.4, 1.4, sweep) * off.width;
+    const g = octx.createLinearGradient(sx - 160, 0, sx + 160, off.height * 0.3);
+    g.addColorStop(0, "rgba(255,255,255,0)"); g.addColorStop(0.5, "rgba(255,255,255,0.85)"); g.addColorStop(1, "rgba(255,255,255,0)");
+    octx.fillStyle = g; octx.fillRect(0, 0, off.width, off.height);
+  }
+  ctx.save(); ctx.globalAlpha = alpha;
+  if (glow > 0) ctx.filter = `blur(${glow * 14}px) brightness(${1 + glow * 1.6})`;
+  ctx.drawImage(off, x, y, w, h); ctx.filter = "none";
+  if (glow < 1) { ctx.globalCompositeOperation = "lighter"; ctx.globalAlpha = alpha * 0.18; ctx.filter = "blur(30px)"; ctx.drawImage(off, x, y, w, h); }
+  ctx.restore();
+}
+
+// ── Adegan 1–2: konstruksi → logo ──
+function sceneOpen(t) {
+  const push = 1 + t * 0.008;
+  ctx.save(); ctx.translate(W / 2, H / 2); ctx.scale(push, push); ctx.translate(-W / 2, -H / 2);
+  blueprint(t, lerp(1, 0.16, seg(t, CUTS.mark, CUTS.mark + 1.2)));
+  const mp = seg(t, CUTS.mark - 0.3, CUTS.mark + 0.9);
+  mark(MB.x, MB.y, MB.w, MB.h, eOut(mp), 1 - eOut(mp), t > CUTS.star - 0.2 ? seg(t, CUTS.star - 0.2, CUTS.star + 1.0) : null);
+  const [sx, sy] = P(0.91, 0.272);
+  const sp = seg(t, CUTS.star - 0.15, CUTS.star + 1.6);
+  if (sp > 0 && sp < 1) star(sx, sy, lerp(10, 46, eExpo(sp)) * (1 - sp * 0.4), (1 - sp) * 1.0, (1 - sp) * 1.4);
+  // wordmark
+  const wp = seg(t, CUTS.word, CUTS.word + 1.3);
+  if (wp > 0 && !HERO) {
+    const ww = 560, wh = ww * WORD.height / WORD.width;
+    ctx.save(); ctx.globalAlpha = eOut(wp);
+    const sc = lerp(1.25, 1, eExpo(wp));
+    ctx.translate(W / 2, MB.y + MB.h + 92); ctx.scale(sc, 1); ctx.drawImage(WORD, -ww / 2, -wh / 2, ww, wh); ctx.restore();
+    text("INDEPENDENT STUDIO  ·  BANDUNG  ·  EST. 2026", W / 2, MB.y + MB.h + 170, { size: 17, weight: 400, family: "Lexend", color: C.s400, spacing: 6, align: "center", alpha: seg(t, CUTS.word + 0.5, CUTS.word + 1.4) });
+  }
+  ctx.restore();
+}
+
+function sceneLabel(n, label, t) {
+  if (HERO) return;
+  const a = seg(t, 0.15, 0.7);
+  text(n, 140, 200, { size: 16, weight: 500, family: "Lexend", color: C.ice, spacing: 5, alpha: a });
+  text(label, 196, 200, { size: 16, weight: 500, family: "Lexend", color: C.s300, spacing: 5, alpha: a });
+  ctx.save(); ctx.strokeStyle = "rgba(185,193,218,0.35)"; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(140, 226); ctx.lineTo(140 + 1640 * eExpo(seg(t, 0.1, 1.4)), 226); ctx.stroke(); ctx.restore();
+}
+
+// ── Adegan 3: Roblox kits (HUD dirangkai dari garis) ──
+const KITS = ["HANGOUT KIT V2", "CLUB KIT PRO", "SUMMIT KIT V2", "PET SYSTEM", "INVENTORY SYSTEM", "MUSIC SYSTEM"];
+function sceneKits(t) {
+  sceneLabel("01", "ROBLOX", t);
+  riseLine("ROBLOX", 136, 640, seg(t, 0.2, 1.3), { size: 128 });
+  riseLine("KITS", 136, 790, seg(t, 0.32, 1.42), { size: 128 });
+  text("READY TO SHIP · DATASTORE · RANKS · GAMEPASS", 140, 870, { size: 18, weight: 400, family: "Lexend", color: C.s300, spacing: 4, alpha: seg(t, 0.8, 1.4) , copy: true });
+  // jendela
+  const x = 1060, y = 300, w = 700, h = 420, wp = eOut(seg(t, 0.3, 1.2));
+  ctx.save(); ctx.strokeStyle = "rgba(185,193,218,0.6)"; ctx.lineWidth = 1.5;
+  ctx.strokeRect(x, y, w * wp, h * eOut(seg(t, 0.5, 1.3)));
+  ctx.beginPath(); ctx.moveTo(x, y + 64); ctx.lineTo(x + w * wp, y + 64); ctx.stroke();
+  ctx.restore();
+  text("INVENTORY", x + 28, y + 42, { size: 18, weight: 700, color: C.s50, spacing: 3, alpha: seg(t, 0.9, 1.3) });
+  KITS.forEach((k, i) => {
+    const p = seg(t, 1.0 + i * 0.16, 1.4 + i * 0.16);
+    const ry = y + 104 + i * 50;
+    if (i === 2) { ctx.save(); ctx.globalAlpha = p * 0.18; ctx.fillStyle = C.ice; ctx.fillRect(x + 1, ry - 30, w - 2, 44); ctx.restore(); }
+    text(String(i + 1).padStart(2, "0"), x + 28, ry, { size: 15, weight: 400, family: "JetBrains Mono", color: C.s400, alpha: p });
+    text(k, x + 80 + (1 - eOut(p)) * 30, ry, { size: 20, weight: 400, family: "Lexend", color: i === 2 ? C.s50 : C.s300, spacing: 2, alpha: p });
+    text("✓", x + w - 40, ry, { size: 18, weight: 400, family: "Lexend", color: C.ice, alpha: seg(t, 1.5 + i * 0.16, 1.8 + i * 0.16) });
+  });
+  // hotbar
+  for (let i = 0; i < 6; i++) {
+    const p = eOut(seg(t, 0.6 + i * 0.09, 1.1 + i * 0.09)), s = 92, gx = x + 30 + i * (s + 18), gy = y + h + 54;
+    ctx.save(); ctx.globalAlpha = p; ctx.strokeStyle = i === 2 ? C.s50 : "rgba(185,193,218,0.5)"; ctx.lineWidth = i === 2 ? 2.5 : 1.5;
+    ctx.strokeRect(gx, gy + (1 - p) * 24, s, s);
+    text(String(i + 1), gx + 10, gy + 26 + (1 - p) * 24, { size: 14, weight: 400, family: "JetBrains Mono", color: C.s400, alpha: p });
+    ctx.restore();
+  }
+  const n = Math.round(lerp(0, 8, eOut(seg(t, 0.6, 2.4))));
+  text(String(n).padStart(2, "0"), 1780, 1000, { size: 64, weight: 700, color: C.s50, align: "right", alpha: seg(t, 0.5, 1) , copy: true });
+  text("KITS SHIPPED", 1780, 1030, { size: 14, weight: 500, family: "Lexend", color: C.s400, spacing: 4, align: "right", alpha: seg(t, 0.5, 1) , copy: true });
+}
+
+// ── Adegan 4: alat kreator (gelombang audio + skybox) ──
+function sceneTools(t) {
+  sceneLabel("02", "CREATOR TOOLS", t);
+  riseLine("CREATOR", 136, 640, seg(t, 0.2, 1.3), { size: 128 });
+  riseLine("TOOLS", 136, 790, seg(t, 0.32, 1.42), { size: 128 });
+  text("ARRR STUDIO BYPASS  ·  WEB & DESKTOP", 140, 870, { size: 18, weight: 400, family: "Lexend", color: C.s300, spacing: 4, alpha: seg(t, 0.8, 1.4) , copy: true });
+  // gelombang
+  const bars = 72, x0 = 1000, bw = 10, gap = 1.2;
+  const env = eOut(seg(t, 0.4, 1.2));
+  ctx.save(); ctx.globalCompositeOperation = "lighter";
+  for (let i = 0; i < bars; i++) {
+    const a = (noise(i * 0.35 + t * 3.2) * 0.7 + noise(i * 1.3 - t * 6) * 0.3) * Math.sin((i / bars) * Math.PI);
+    const hgt = 16 + a * 300 * env;
+    const reveal = seg(t, 0.4 + i * 0.008, 0.6 + i * 0.008);
+    ctx.globalAlpha = reveal * (0.45 + a * 0.55);
+    ctx.fillStyle = i % 9 === 0 ? C.ice : C.s300;
+    ctx.fillRect(x0 + i * bw * gap, 470 - hgt / 2, bw * 0.6, hgt);
+  }
+  ctx.restore();
+  // pipeline
+  const py = 760, pa = seg(t, 1.2, 1.8);
+  ctx.save(); ctx.globalAlpha = pa; ctx.strokeStyle = "rgba(185,193,218,0.6)"; ctx.lineWidth = 1.5;
+  ctx.strokeRect(1000, py - 44, 250, 70); ctx.strokeRect(1510, py - 44, 270, 70);
+  ctx.beginPath(); ctx.moveTo(1265, py - 9); ctx.lineTo(1265 + 230 * eOut(seg(t, 1.5, 2.2)), py - 9); ctx.stroke();
+  ctx.restore();
+  text("YOUTUBE", 1125, py, { size: 18, weight: 700, color: C.s50, spacing: 3, align: "center", alpha: pa });
+  text("ROBLOX AUDIO", 1645, py, { size: 18, weight: 700, color: C.s50, spacing: 3, align: "center", alpha: seg(t, 2.0, 2.4) });
+  const dot = seg(t, 1.5, 2.2); if (dot > 0 && dot < 1) star(1265 + 230 * eOut(dot), py - 9, 12, 1, 0.3);
+  text("SKYBOX 6 SIDES · REMOVE BG · UPSCALE · OBFUSCATOR", 1000, 880, { size: 15, weight: 400, family: "JetBrains Mono", color: C.s400, spacing: 1, alpha: seg(t, 2.1, 2.6) });
+}
+
+// ── Adegan 5: web & data (node migrasi) ──
+function sceneData(t) {
+  sceneLabel("03", "WEB & DATA", t);
+  riseLine("WEB &", 136, 640, seg(t, 0.2, 1.3), { size: 128 });
+  riseLine("DATA", 136, 790, seg(t, 0.32, 1.42), { size: 128 });
+  text("ARRR DATABRIDGE  ·  OPEN CLOUD API", 140, 870, { size: 18, weight: 400, family: "Lexend", color: C.s300, spacing: 4, alpha: seg(t, 0.8, 1.4) , copy: true });
+  const L = 1060, R = 1700, top = 330, n = 7;
+  text("UNIVERSE / V1", L, top - 40, { size: 14, weight: 400, family: "JetBrains Mono", color: C.s400, alpha: seg(t, 0.4, 0.8) });
+  text("UNIVERSE / V2", R, top - 40, { size: 14, weight: 400, family: "JetBrains Mono", color: C.s400, align: "right", alpha: seg(t, 0.4, 0.8) });
+  for (let i = 0; i < n; i++) {
+    const y = top + i * 72, a = seg(t, 0.4 + i * 0.07, 0.8 + i * 0.07);
+    const lp = eInOut(seg(t, 1.0 + i * 0.22, 1.6 + i * 0.22));
+    ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = C.s300;
+    ctx.beginPath(); ctx.arc(L, y, 5, 0, 7); ctx.fill();
+    ctx.beginPath(); ctx.arc(R, y, 5, 0, 7); ctx.fillStyle = lp >= 1 ? C.ice : "rgba(185,193,218,0.4)"; ctx.fill();
+    if (lp > 0) {
+      ctx.strokeStyle = lp >= 1 ? "rgba(127,162,255,0.7)" : "rgba(242,244,250,0.85)"; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(L, y);
+      const ex = lerp(L, R, lp);
+      ctx.bezierCurveTo(L + 220, y, ex - 220 * lp, y, ex, y); ctx.stroke();
+      if (lp < 1) star(ex, y, 10, 1, 0.25);
+    }
+    ctx.restore();
+    text(`Player_1048${2231 + i * 13}`, L + 22, y - 14, { size: 13, weight: 400, family: "JetBrains Mono", color: C.s400, alpha: a * 0.9 });
+    text(lp >= 1 ? "verified" : "pending", R - 22, y - 14, { size: 13, weight: 400, family: "JetBrains Mono", color: lp >= 1 ? C.ice : C.s600, align: "right", alpha: a });
+  }
+  const cnt = Math.round(lerp(0, 10000, eInOut(seg(t, 1.0, 3.2))));
+  text(cnt.toLocaleString("en-US"), 1780, 1000, { size: 64, weight: 700, color: C.s50, align: "right", alpha: seg(t, 0.5, 1) , copy: true });
+  text("RECORDS MIGRATED", 1780, 1030, { size: 14, weight: 500, family: "Lexend", color: C.s400, spacing: 4, align: "right", alpha: seg(t, 0.5, 1) , copy: true });
+}
+
+// ── Adegan 6: satu developer ──
+function sceneFounder(t) {
+  if (HERO) {
+    // Versi hero: jeda tenang — partikel bintang + orbit berputar, tanpa teks.
+    particles(t, 3.0);
+    orbitRing(t, 3.0);
+    return;
+  }
+  riseLine("ONE DEVELOPER.", W / 2, 500, seg(t, 0.15, 1.2), { size: 104, align: "center" });
+  riseLine("ONE STANDARD.", W / 2, 630, seg(t, 0.3, 1.35), { size: 104, align: "center", color: C.s300 });
+  const lp = eExpo(seg(t, 0.8, 2.0));
+  ctx.save(); ctx.strokeStyle = "rgba(185,193,218,0.45)"; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(W / 2 - 360 * lp, 720); ctx.lineTo(W / 2 - 30, 720); ctx.moveTo(W / 2 + 30, 720); ctx.lineTo(W / 2 + 360 * lp, 720); ctx.stroke(); ctx.restore();
+  star(W / 2, 720, 12 * seg(t, 1.0, 1.5), 1, 0.2);
+  text("SIGIT “ARRR” HARDIANTO  ·  FOUNDER", W / 2, 800, { size: 18, weight: 400, family: "Lexend", color: C.s300, spacing: 6, align: "center", alpha: seg(t, 1.2, 1.9) , copy: true });
+}
+
+// ── Adegan 7: lockup akhir + orbit + partikel bintang ──
+const CX = MB.x + MB.w / 2; // pusat mark (tengah di film, kanan di hero)
+
+function particles(t, d) {
+  for (let i = 0; i < 40; i++) {
+    const px = hash(i + 3) * W;
+    const py = hash(i + 50) * H - t * (8 + hash(i) * 22);
+    const wy = ((py % H) + H) % H;
+    if (HERO && px < W * 0.5 && wy > H * 0.62) continue; // jangan berkelip di belakang judul web
+    const a = seg(t, 0.3 + hash(i + 9) * 1.2, 1.2 + hash(i + 9) * 1.2) * (0.25 + hash(i + 20) * 0.5) * (1 - seg(t, d - 0.8, d));
+    if (a > 0) star(px, ((py % H) + H) % H, 2 + hash(i + 4) * 4, a, 0);
+  }
+}
+
+function orbitRing(t, d) {
+  const k = HERO ? 0.75 : 1;
+  ctx.save(); ctx.globalAlpha = seg(t, 0.4, 1.4) * 0.35 * (1 - seg(t, d - 0.6, d)); ctx.strokeStyle = C.s300; ctx.lineWidth = 1;
+  ctx.translate(CX, MB.y + MB.h * 0.6); ctx.rotate(-0.47 + t * 0.04);
+  ctx.beginPath(); ctx.ellipse(0, 0, 640 * k, 140 * k, 0, 0, 7); ctx.stroke();
+  ctx.beginPath(); ctx.ellipse(0, 0, 760 * k, 170 * k, 0, 0, 7); ctx.globalAlpha *= 0.5; ctx.stroke();
+  ctx.restore();
+}
+
+function sceneFinal(t) {
+  const d = DUR - CUTS.final;
+  particles(t, d);
+  const mp = seg(t, 0.1, 1.2);
+  const s = lerp(0.9, 1, eExpo(mp));
+  const w = MB.w * s, h = MB.h * s;
+  orbitRing(t, d);
+  const out = 1 - seg(t, d - 0.6, d);
+  mark(CX - w / 2, MB.y + (MB.h - h) / 2, w, h, eOut(mp) * out, (1 - eOut(mp)) * 0.6, seg(t, 0.6, 1.8));
+  const [sx, sy] = [CX - w / 2 + 0.91 * w, MB.y + (MB.h - h) / 2 + 0.272 * h];
+  const sp = seg(t, 0.2, 1.8); if (sp > 0 && sp < 1) star(sx, sy, 40 * (1 - sp * 0.5), (1 - sp) * out, (1 - sp) * 1.2);
+  const ww = 560, wh = ww * WORD.height / WORD.width;
+  if (!HERO) { ctx.save(); ctx.globalAlpha = eOut(seg(t, 0.7, 1.7)) * out; ctx.drawImage(WORD, W / 2 - ww / 2, MB.y + MB.h + 70, ww, wh); ctx.restore(); }
+  text("ARRRSTUDIO.COM", W / 2, MB.y + MB.h + 170, { size: 18, weight: 400, family: "Lexend", color: C.s400, spacing: 8, align: "center", alpha: seg(t, 1.3, 2.0) * out , copy: true });
+}
+
+const SCENES = [
+  { a: 0, b: CUTS.kits, draw: sceneOpen },
+  { a: CUTS.kits, b: CUTS.tools, draw: sceneKits },
+  { a: CUTS.tools, b: CUTS.data, draw: sceneTools },
+  { a: CUTS.data, b: CUTS.founder, draw: sceneData },
+  { a: CUTS.founder, b: CUTS.final, draw: sceneFounder },
+  { a: CUTS.final, b: DUR, draw: sceneFinal },
+];
+const WIPE = 0.7;
+
+// Hero: visual produk (aslinya di kolom kanan) dipusatkan & dinaikkan supaya kiri bawah bebas untuk judul web.
+const HERO_SHIFT = new Set([sceneKits, sceneTools, sceneData]);
+function drawScene(s, t, lift) {
+  ctx.save(); ctx.translate(0, -lift);
+  if (HERO && HERO_SHIFT.has(s.draw)) ctx.translate(-430, -110);
+  s.draw(t - s.a); ctx.restore();
+}
+
+window.render = (t) => {
+  background(t);
+  const i = SCENES.findIndex((s) => t >= s.a && t < s.b);
+  const cur = SCENES[i < 0 ? SCENES.length - 1 : i];
+  const k = (t - cur.a) / WIPE;
+  if (i > 0 && k < 1) {
+    const e = eInOut(clamp(k));
+    drawScene(SCENES[i - 1], t, e * 140);
+    ctx.save(); ctx.beginPath(); ctx.rect(0, H * (1 - e), W, H * e); ctx.clip();
+    background(t); drawScene(cur, t, (1 - e) * 80); ctx.restore();
+    ctx.save(); ctx.fillStyle = "rgba(242,244,250,0.7)"; ctx.fillRect(0, H * (1 - e) - 1, W, 1.5); ctx.restore();
+  } else drawScene(cur, t, 0);
+  // fade masuk & keluar agar loop mulus
+  const fade = Math.max(1 - seg(t, 0, 0.5), seg(t, DUR - 0.5, DUR));
+  if (fade > 0) { ctx.fillStyle = `rgba(3,6,26,${fade})`; ctx.fillRect(0, 0, W, H); }
+};
+
+window.ready = (async () => {
+  [MARK, WORD] = await Promise.all([img("../../public/brand/arrr-a.webp"), img("../../public/brand/arrr-wordmark.webp")]);
+  await document.fonts.load("700 100px Syncopate"); await document.fonts.load("400 20px Lexend"); await document.fonts.load("500 20px Lexend"); await document.fonts.load("400 20px 'JetBrains Mono'");
+  await document.fonts.ready;
+  return true;
+})();
+</script>
+</body>
+</html>

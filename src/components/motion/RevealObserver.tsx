@@ -13,7 +13,7 @@ export default function RevealObserver() {
           observer.unobserve(entry.target);
         }
       },
-      { rootMargin: "0px 0px -10% 0px", threshold: 0.12 },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.1 },
     );
     document.querySelectorAll("[data-reveal]:not(.in)").forEach((el) => observer.observe(el));
     return () => observer.disconnect();

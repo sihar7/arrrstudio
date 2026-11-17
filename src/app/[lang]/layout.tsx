@@ -1,12 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Lexend, Syncopate } from "next/font/google";
 import { notFound } from "next/navigation";
 import { getDictionary, hasLocale, locales } from "@/utils/i18n";
 import { themeInitScript } from "@/utils/theme";
 import { siteUrl } from "@/Url/Url";
+import RootStateSync from "@/components/shared/RootStateSync";
 import "@/css/globals.css";
 
-const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
+// Syncopate = huruf lebar kapital seperti wordmark "ARRR STUDIO"; Lexend = teks baca yang sedikit lebar.
+const syncopate = Syncopate({ variable: "--font-syncopate", subsets: ["latin"], weight: ["400", "700"] });
+const lexend = Lexend({ variable: "--font-lexend", subsets: ["latin"], weight: ["300", "400", "500"] });
 
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
@@ -37,8 +40,8 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#eceef1" },
-    { media: "(prefers-color-scheme: dark)", color: "#08090a" },
+    { media: "(prefers-color-scheme: light)", color: "#060b1c" },
+    { media: "(prefers-color-scheme: dark)", color: "#060b1c" },
   ],
 };
 
@@ -47,11 +50,12 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
   if (!hasLocale(lang)) notFound();
 
   return (
-    <html lang={lang} suppressHydrationWarning className={`${inter.variable} antialiased`}>
+    <html lang={lang} suppressHydrationWarning className={`${syncopate.variable} ${lexend.variable} antialiased`}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body className="min-h-dvh">
+        <RootStateSync />
         {children}
       </body>
     </html>

@@ -20,7 +20,7 @@ export default function ThemeToggle({ label }: { label: string }) {
       onClick={toggle}
       aria-label={label}
       title={label}
-      className="grid size-11 cursor-pointer place-items-center rounded-full text-ink-2 transition-colors duration-150 hover:bg-sunken hover:text-ink active:scale-95"
+      className="grid size-11 cursor-pointer place-items-center text-ink transition-transform duration-300 hover:rotate-[20deg] active:scale-90"
     >
       <HalfMoon aria-hidden width={18} height={18} strokeWidth={1.6} className="dark:hidden" />
       <SunLight aria-hidden width={18} height={18} strokeWidth={1.6} className="hidden dark:block" />

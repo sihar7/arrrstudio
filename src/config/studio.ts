@@ -1,12 +1,21 @@
 // Fakta tetap studio. Teks yang bergantung bahasa ada di src/utils/languages/*.json.
 export const Studio = {
   name: "ArrrStudio",
-  // Logo transparan (chrome + maroon) di public/brand; ukuran asli dipakai untuk rasio next/image.
-  logo: { src: "/brand/arrr-studio.webp", width: 1650, height: 562 },
-  // Huruf A dari logo — dipakai di ukuran kecil (header) karena wordmark penuh tidak terbaca.
-  mark: { src: "/brand/arrr-mark.webp", width: 729, height: 418 },
-  // Siluet mark kecil (±2 KB) untuk mask efek kilau logo.
-  markMask: "/brand/arrr-mark-mask.webp",
+  // Logo resmi (navy · silver): mark "A" + orbit + bintang, dan lockup lengkap. Latar transparan, ukuran asli untuk rasio.
+  mark: { src: "/brand/arrr-a.webp", width: 599, height: 422 },
+  lockup: { src: "/brand/arrr-lockup.webp", width: 821, height: 591 },
+  wordmark: { src: "/brand/arrr-wordmark.webp", width: 821, height: 120 },
+  // Film hero (dibuat dari skrip di scripts/film). Poster = frame pertama yang terbaca.
+  // hero = versi ambient tanpa tipografi (latar judul); full = film lengkap bertulisan di pemutar "Tonton film".
+  // Keduanya membawa narasi suara perempuan sesuai bahasa halaman (id: Gadis, en: Ava).
+  film: {
+    src: (lang: string) => `/film/arrrstudio-hero-${lang}.mp4`,
+    mobile: (lang: string) => `/film/arrrstudio-hero-${lang}-720.mp4`,
+    full: (lang: string) => `/film/arrrstudio-film-${lang}.mp4`,
+    poster: "/film/poster.webp",
+    fullPoster: "/film/film-poster.webp",
+    closing: "/film/closing.webp",
+  },
   foundedYear: 2026,
   city: "Bandung",
   country: "ID",
@@ -52,12 +61,14 @@ export const Catalog: CatalogGroup[] = [
   },
 ];
 
-export type Release = { id: "databridge" | "bypass" | "clubkit" | "summit"; name: string; date: string; href: "databridge" | "converter" | "store"; isNew?: boolean };
+export type WorkId = "databridge" | "converter" | "store" | "license" | "discord";
+export type Work = { id: WorkId; href: "databridge" | "converter" | "store" | "license" | "discord"; image?: string; isNew?: boolean };
 
-// Rilis terbaru di bawah hero (terbaru dulu). Rilis baru: tambah di paling atas, beri isNew, hapus isNew dari yang lama.
-export const Releases: Release[] = [
-  { id: "databridge", name: "ARRR DataBridge", date: "2026-10-30", href: "databridge", isNew: true },
-  { id: "bypass", name: "ARRR Studio Bypass", date: "2026-10-01", href: "converter" },
-  { id: "clubkit", name: "Club Kit Pro", date: "2026-09-01", href: "store" },
-  { id: "summit", name: "Summit Kit", date: "2026-09-01", href: "store" },
+// Isi carousel Ekosistem (terbaru dulu). Gambar = tangkapan layar asli produk di public/work.
+export const Works: Work[] = [
+  { id: "databridge", href: "databridge", image: "/work/databridge.webp", isNew: true },
+  { id: "converter", href: "converter", image: "/work/bypass.webp" },
+  { id: "store", href: "store", image: "/work/store.webp" },
+  { id: "license", href: "license", image: "/work/license.webp" },
+  { id: "discord", href: "discord" },
 ];

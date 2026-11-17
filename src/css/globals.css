@@ -2,125 +2,90 @@
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-/* ── Primitive (acuan Refero: Linear "midnight precision instrument") ── */
+/* ══ Primitive — diturunkan dari logo "A berlian metallic" (navy + silver) ══ */
 :root {
-  --void: #08090a;
-  --carbon: #0f1011;
-  --obsidian: #161718;
-  --graphite: #23252a;
-  --smoke: #383b3f;
-  --ash: #62666d;
-  --fog: #8a8f98;
-  --mist: #d0d6e0;
-  --bone: #e5e5e6;
-  --paper: #ffffff;
-  --maroon-300: #e0899a;
-  --maroon-500: #a3243b;
-  --maroon-600: #8a2134;
-  --maroon-700: #741a2b;
+  --navy-1000: #03061a;
+  --navy-950: #060b1c;
+  --navy-900: #0a1330;
+  --navy-850: #0e1a40;
+  --navy-800: #16245a;
+  --navy-700: #1f3275;
+  --ice-500: #7fa2ff; /* kilau biru di latar logo */
+  --ice-600: #2f55d4;
+  --silver-50: #f2f4fa;
+  --silver-100: #e6e9f2;
+  --silver-200: #c9cfe0;
+  --silver-300: #b9c1da;
+  --silver-400: #8790b0;
+  --silver-600: #5a6584;
+  --silver-700: #34405f;
+  --white: #ffffff;
 }
 
-/* ── Semantic: terang ("paper & silver studio") — peran token sama dengan gelap ── */
-:root,
+/* ══ Semantic: terang ("frost") — editorial putih ala halaman mobil, hero tetap sinema navy ══ */
 [data-theme="light"] {
   color-scheme: light;
-  --canvas: #ffffff;
-  --surface: #ffffff;
-  --sunken: #f1f2f5;
-  --tint: rgb(11 12 14 / 0.045);
-  --ink: #0b0c0e;
-  --ink-2: #3a3e45;
-  --ink-3: #62676f;
-  --line: #e6e8ec;
-  --line-strong: #d3d7de;
-  --accent: var(--maroon-700);
-  --accent-hover: var(--maroon-600);
-  --accent-ink: #ffffff;
-  --neutral-cta: var(--void);
-  --neutral-cta-ink: var(--paper);
-  --floor: linear-gradient(180deg, transparent 0%, #eef0f3 100%);
-  --spot-edge: rgb(11 12 14 / 0.28);
-  --spot-fill: rgb(240 242 245 / 0.7);
-  --surface-hi: #ffffff;
-  --inner-hi: rgb(255 255 255 / 1);
-  --drop: rgb(20 24 32 / 0.1);
-  --chrome-edge: linear-gradient(150deg, #e9ecf0 0%, #dde1e7 35%, #d3d8df 65%, rgb(116 26 43 / 0.35) 100%);
-  --stage: radial-gradient(80% 75% at 50% 40%, #ffffff 0%, #e9ecf0 70%, #dfe3e8 100%);
-  --stage-meta: #6a6f77;
-  --stage-strong: #0b0c0e;
-  --code-bg: linear-gradient(180deg, #fbfbfc, #f6f7f9);
-  --code-text: #2b2f36;
-  --code-strong: #0b0c0e;
-  --code-muted: #6a6f77;
-  --code-gutter: #a7acb5;
-  --code-keyword: var(--maroon-700);
-  --code-bar: rgb(11 12 14 / 0.08);
-  --code-chip: rgb(11 12 14 / 0.05);
-  --focus: var(--maroon-600);
+  --canvas: #f2f4f9;
+  --surface: var(--white);
+  --sunken: #e7ebf4;
+  --ink: var(--navy-900);
+  --ink-2: var(--silver-700);
+  --ink-3: var(--silver-600); /* 5.2:1 di canvas */
+  --line: rgb(10 19 48 / 0.12);
+  --line-strong: rgb(10 19 48 / 0.24);
+  --cta: var(--navy-900); /* tombol kotak utama */
+  --cta-ink: var(--silver-50);
+  --cta-sweep: var(--navy-700);
+  --signal: var(--ice-600); /* indikator aktif / progres / fokus — bukan teks panjang */
+  --media-tint: rgb(10 19 48 / 0.55);
 }
 
-/* ── Semantic: gelap (midnight) ────────────────────────────── */
-[data-theme="dark"] {
+/* ══ Semantic: gelap (navy, default) — kedalaman dari tone navy, bukan invert ══ */
+:where(:root),
+[data-theme="dark"],
+.cinema {
   color-scheme: dark;
-  --canvas: var(--void);
-  --surface: var(--carbon);
-  --sunken: var(--obsidian);
-  --tint: rgb(255 255 255 / 0.05);
-  --ink: #f7f8f8;
-  --ink-2: var(--mist);
-  --ink-3: var(--fog);
-  --line: var(--graphite);
-  --line-strong: var(--smoke);
-  --accent: var(--maroon-500);
-  --accent-hover: #b52c45;
-  --accent-ink: #ffffff;
-  --neutral-cta: var(--paper);
-  --neutral-cta-ink: var(--void);
-  --floor: linear-gradient(180deg, transparent 10%, rgb(208 214 224 / 0.16) 100%);
-  --spot-edge: rgb(208 214 224 / 0.6);
-  --surface-hi: #131416;
-  --inner-hi: rgb(255 255 255 / 0.05);
-  --drop: rgb(0 0 0 / 0.6);
-  --chrome-edge: linear-gradient(150deg, rgb(229 229 230 / 0.45) 0%, rgb(56 59 63 / 0.7) 28%, rgb(35 37 42 / 0.9) 62%, rgb(163 36 59 / 0.6) 100%);
-  --spot-fill: rgb(255 255 255 / 0.035);
-  --stage: radial-gradient(80% 70% at 50% 45%, #1a1b1e, #0b0c0d);
-  --stage-meta: var(--fog);
-  --stage-strong: var(--mist);
-  --code-bg: linear-gradient(180deg, #141518, #0c0d0e);
-  --code-text: var(--mist);
-  --code-strong: #ffffff;
-  --code-muted: var(--fog);
-  --code-gutter: var(--ash);
-  --code-keyword: var(--maroon-300);
-  --code-bar: rgb(255 255 255 / 0.1);
-  --code-chip: rgb(255 255 255 / 0.05);
-  --focus: var(--maroon-300);
+  --canvas: var(--navy-950);
+  --surface: var(--navy-900);
+  --sunken: var(--navy-850);
+  --ink: var(--silver-50);
+  --ink-2: var(--silver-300);
+  --ink-3: var(--silver-400); /* 6.1:1 di canvas */
+  --line: rgb(170 185 230 / 0.14);
+  --line-strong: rgb(170 185 230 / 0.28);
+  --cta: var(--silver-100);
+  --cta-ink: var(--navy-950);
+  --cta-sweep: var(--white);
+  --signal: var(--ice-500);
+  --media-tint: rgb(6 11 28 / 0.6);
+}
+
+/* Bagian sinema (hero, intro, menu, penutup) selalu navy di kedua tema. */
+.cinema {
+  background: var(--navy-950);
+  color: var(--ink);
 }
 
 @theme inline {
   --color-canvas: var(--canvas);
   --color-surface: var(--surface);
   --color-sunken: var(--sunken);
-  --color-tint: var(--tint);
   --color-ink: var(--ink);
   --color-ink-2: var(--ink-2);
   --color-ink-3: var(--ink-3);
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
-  --color-accent: var(--accent);
-  --color-accent-hover: var(--accent-hover);
-  --color-accent-ink: var(--accent-ink);
-  --color-neutral-cta: var(--neutral-cta);
-  --color-neutral-cta-ink: var(--neutral-cta-ink);
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", "Roboto Mono", Menlo, Consolas, monospace;
-  --radius-card: 12px;
-  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --color-cta: var(--cta);
+  --color-cta-ink: var(--cta-ink);
+  --color-signal: var(--signal);
+  --font-sans: var(--font-lexend), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-syncopate), var(--font-lexend), ui-sans-serif, sans-serif;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
 }
 
-/* ── Base ──────────────────────────────────────────────────── */
+/* ══ Base ══ */
 html {
-  scroll-behavior: smooth;
   scroll-padding-top: 5rem;
 }
 
@@ -128,22 +93,25 @@ body {
   background: var(--canvas);
   color: var(--ink);
   font-family: var(--font-sans);
-  font-feature-settings: "cv01", "ss03", "zero";
+  font-weight: 300;
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.6;
   -webkit-tap-highlight-color: transparent;
-  transition: background-color 0.22s ease, color 0.22s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.menu-open {
+  overflow: hidden;
 }
 
 ::selection {
-  background: var(--accent);
-  color: var(--accent-ink);
+  background: var(--signal);
+  color: var(--navy-950);
 }
 
 :focus-visible {
-  outline: 2px solid var(--focus);
+  outline: 2px solid var(--signal);
   outline-offset: 3px;
-  border-radius: 4px;
 }
 
 h1,
@@ -152,460 +120,788 @@ h3 {
   text-wrap: balance;
 }
 
-/* ── Panel bertepi chrome: silver mengilap di kiri-atas → rim maroon di kanan-bawah (bevel logo) ── */
-.frame {
-  border: 1px solid transparent;
-  border-radius: 12px;
-  background:
-    linear-gradient(180deg, var(--surface-hi), var(--surface)) padding-box,
-    var(--chrome-edge) border-box;
-  box-shadow:
-    inset 0 1px 0 var(--inner-hi),
-    0 24px 48px -28px var(--drop);
+p {
+  text-wrap: pretty;
 }
 
-/* Editor kode: terang/gelap mengikuti tema, tepi chrome tetap */
-.frame-code {
-  border: 1px solid transparent;
-  border-radius: 12px;
-  background:
-    var(--code-bg) padding-box,
-    var(--chrome-edge) border-box;
-  box-shadow:
-    inset 0 1px 0 var(--inner-hi),
-    0 24px 48px -28px var(--drop);
-  color: var(--code-text);
+/* ══ Tipografi ══ */
+.display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 1.02;
 }
 
-/* Kartu pemain selalu gelap (layar editor / HUD game) di kedua tema */
-.frame-dark {
-  border: 1px solid transparent;
-  border-radius: 12px;
-  background:
-    linear-gradient(180deg, #141518, #0c0d0e) padding-box,
-    linear-gradient(150deg, rgb(229 229 230 / 0.55) 0%, rgb(56 59 63 / 0.7) 28%, rgb(35 37 42 / 0.9) 62%, rgb(163 36 59 / 0.75) 100%) border-box;
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.06),
-    0 24px 48px -24px rgb(0 0 0 / 0.5);
-  color: var(--mist);
+.label {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1.3;
 }
 
-/* Section di bawah lipatan tidak di-style/layout/paint sampai mendekati viewport (performa awal) */
-.cv-auto {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 1000px;
+/* Bintang 4 sudut dari logo — penanda label section. */
+.star {
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  background: currentColor;
+  clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%);
+  flex-shrink: 0;
 }
 
-/* ── Pita section: tiap pita menimpa token semantik, komponen di dalamnya ikut otomatis ── */
-.tone-base,
-.tone-raised,
-.tone-inverse,
-.tone-brand {
-  background: var(--canvas);
-  color: var(--ink);
-}
-
-[data-theme="dark"] .tone-raised {
-  --canvas: #121316;
-  --surface: #18191c;
-  --surface-hi: #1d1e22;
-  --sunken: #202125;
-  background: linear-gradient(180deg, #131417 0%, #0f1012 100%);
-  box-shadow:
-    inset 0 0.5px 0 var(--graphite),
-    inset 0 -0.5px 0 var(--graphite);
-}
-
-[data-theme="light"] .tone-raised {
-  --canvas: #f6f7f9;
-  --surface: #ffffff;
-  --surface-hi: #ffffff;
-  background: linear-gradient(180deg, #f8f9fa 0%, #f3f4f7 100%);
-  box-shadow:
-    inset 0 1px 0 #e6e8ec,
-    inset 0 -1px 0 #e6e8ec;
-}
-
-/* Pita terbalik: silver logam di tema gelap, graphite di tema terang */
-[data-theme="dark"] .tone-inverse {
-  --canvas: #e4e7ec;
-  --surface: #f4f5f7;
-  --surface-hi: #ffffff;
-  --sunken: #d6dae1;
-  --tint: rgb(8 9 10 / 0.06);
-  --ink: #08090a;
-  --ink-2: #2e3137;
-  --ink-3: #50545b;
-  --line: #c4cad4;
-  --line-strong: #a6adb8;
-  --accent: var(--maroon-700);
-  --accent-hover: var(--maroon-600);
-  --spot-edge: rgb(8 9 10 / 0.45);
-  --spot-fill: rgb(255 255 255 / 0.6);
-  --inner-hi: rgb(255 255 255 / 0.9);
-  --drop: rgb(30 34 44 / 0.25);
-  --chrome-edge: linear-gradient(150deg, #ffffff 0%, #c9ced8 30%, #a6adb8 62%, rgb(116 26 43 / 0.55) 100%);
-  background: linear-gradient(180deg, #eef0f3 0%, #dfe3e8 100%);
-}
-
-/* Di tema terang pita "terbalik" = silver logam lembut, bukan blok hitam */
-[data-theme="light"] .tone-inverse {
-  --canvas: #e9ecf0;
-  --surface: #ffffff;
-  --surface-hi: #ffffff;
-  --sunken: #dde1e7;
-  --line: #d3d8df;
-  --line-strong: #bcc2cc;
-  background: linear-gradient(180deg, #eef0f3 0%, #e2e6eb 100%);
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.9),
-    inset 0 -1px 0 #d3d8df;
-}
-
-/* Pita brand penutup: maroon gelap di kedua tema; aksi utama berganti putih agar tetap kontras */
-.tone-brand {
-  --canvas: #12070a;
-  --surface: #1a0b10;
-  --surface-hi: #200d13;
-  --tint: rgb(255 255 255 / 0.07);
-  --ink: #ffffff;
-  --ink-2: #e7d9dc;
-  --ink-3: #c2a9af;
-  --line: rgb(255 255 255 / 0.12);
-  --line-strong: rgb(255 255 255 / 0.22);
-  --accent: #ffffff;
-  --accent-hover: #e5e5e6;
-  --accent-ink: #12070a;
-  --focus: #ffffff;
-  background:
-    radial-gradient(90% 70% at 50% 0%, #4a1120 0%, transparent 70%),
-    linear-gradient(180deg, #2a0b14 0%, #12070a 100%);
-}
-
-/* Lantai atmosfer — satu-satunya gradien, khusus di bawah showcase hero */
-.hero-floor {
-  background: var(--floor);
-}
-
-/* ── Sorot kursor: garis tepi hairline menyala + cahaya lembut di dalam kartu ── */
-.spotlight {
-  --sx: 50%;
-  --sy: 50%;
+/* ══ Tombol kotak (acuan: tombol putih persegi McLaren) ══ */
+.btn {
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 22px;
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   isolation: isolate;
+  overflow: hidden;
+  cursor: pointer;
+  transition: color 0.35s var(--ease-out-expo), border-color 0.35s ease, transform 0.15s ease;
 }
 
-.spotlight::before,
-.spotlight::after {
+.btn::before {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.spotlight::before {
-  z-index: 2;
-  padding: 1px;
-  background: radial-gradient(280px circle at var(--sx) var(--sy), var(--spot-edge), transparent 65%);
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-}
-
-.spotlight::after {
   z-index: -1;
-  background: radial-gradient(420px circle at var(--sx) var(--sy), var(--spot-fill), transparent 60%);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s var(--ease-out-expo);
 }
 
-.spotlight:hover::before,
-.spotlight:hover::after {
-  opacity: 1;
+.btn:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
-/* ── Logo hidup: kilau menyapu chrome + bintang maroon berkedip ── */
-/* Kilau: strip gradien digeser dengan transform (compositor), dibatasi bentuk mark lewat mask */
-.logo-shine {
-  overflow: hidden;
-  mask-size: contain;
-  mask-repeat: no-repeat;
-  mask-position: center;
-  -webkit-mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
+.btn:active {
+  transform: scale(0.97);
 }
 
-.logo-shine::before {
+.btn .btn-arrow {
+  transition: transform 0.35s var(--ease-out-expo);
+}
+
+.btn:hover .btn-arrow {
+  transform: translate(3px, -3px);
+}
+
+.btn-solid {
+  background: var(--cta);
+  color: var(--cta-ink);
+}
+
+.btn-solid::before {
+  background: var(--cta-sweep);
+}
+
+.btn-line {
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+}
+
+.btn-line::before {
+  background: var(--ink);
+}
+
+.btn-line:hover {
+  color: var(--canvas);
+  border-color: var(--ink);
+}
+
+/* Tautan teks + panah (acuan: "DISCOVER NOW ›") — garis bawah tumbuh dari kiri. */
+.link-arrow {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.link-arrow::after {
   content: "";
   position: absolute;
-  inset: 0 auto 0 0;
-  width: 60%;
-  background: linear-gradient(105deg, transparent 0%, rgb(255 255 255 / 0.9) 50%, transparent 100%);
+  left: 0;
+  right: 22px;
+  bottom: 10px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.45s var(--ease-out-expo);
+}
+
+.link-arrow:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.link-arrow svg {
+  transition: transform 0.35s var(--ease-out-expo);
+}
+
+.link-arrow:hover svg {
+  transform: translateX(4px);
+}
+
+/* Tombol ikon kotak (kontrol video, panah carousel). */
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.15s ease;
+}
+
+.icon-btn:hover:not(:disabled) {
+  background: var(--ink);
+  color: var(--canvas);
+  border-color: var(--ink);
+}
+
+.icon-btn:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+.icon-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.cinema .icon-btn {
+  background: rgb(6 11 28 / 0.45);
+  backdrop-filter: blur(6px);
+}
+
+/* ══ Intro: konstruksi logo dengan garis blueprint (acuan: intro McLaren) ══ */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  animation: intro-out 0.7s var(--ease-in-out-quint) 2.25s forwards;
+}
+
+.no-intro .intro {
+  display: none;
+}
+
+.intro-guides line {
+  stroke: var(--silver-400);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 0.9s var(--ease-out-expo) forwards, fade-to 0.5s ease 1.3s forwards;
+  animation-delay: calc(var(--d, 0) * 70ms), calc(1300ms + var(--d, 0) * 20ms);
+}
+
+.intro-mark {
+  opacity: 0;
+  filter: brightness(2.2) blur(6px);
+  transform: scale(0.94);
+  animation: mark-in 1s var(--ease-out-expo) 0.75s forwards;
+}
+
+.intro-word {
+  opacity: 0;
+  letter-spacing: 0.9em;
+  animation: word-in 1.1s var(--ease-out-expo) 1.05s forwards;
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fade-to {
+  to {
+    opacity: 0.18;
+  }
+}
+
+@keyframes mark-in {
+  to {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+}
+
+@keyframes word-in {
+  to {
+    opacity: 1;
+    letter-spacing: 0.42em;
+  }
+}
+
+@keyframes intro-out {
+  to {
+    clip-path: inset(0 0 100% 0);
+    visibility: hidden;
+  }
+}
+
+/* ══ Header ══ */
+.site-header {
+  transition: transform 0.5s var(--ease-out-expo), background-color 0.35s ease, border-color 0.35s ease;
+}
+
+.site-header[data-hidden="true"] {
+  transform: translateY(-100%);
+}
+
+.site-header[data-solid="false"] {
+  --ink: var(--silver-50);
+  --ink-2: var(--silver-300);
+  --line-strong: rgb(230 233 242 / 0.35);
+  color: var(--silver-50);
+}
+
+.site-header[data-solid="true"] {
+  background: color-mix(in srgb, var(--canvas) 88%, transparent);
+  backdrop-filter: blur(14px) saturate(1.2);
+  border-color: var(--line);
+}
+
+/* Ikon menu: dua garis → silang. */
+.burger-lines > span {
+  display: block;
+  width: 28px;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 0.45s var(--ease-out-expo), width 0.35s var(--ease-out-expo);
+}
+
+.burger-lines > span + span {
+  margin-top: 7px;
+  width: 20px;
+}
+
+.burger:hover .burger-lines > span + span {
+  width: 28px;
+}
+
+[data-menu="open"] .burger-lines > span:first-child {
+  transform: translateY(4.25px) rotate(45deg);
+}
+
+[data-menu="open"] .burger-lines > span + span {
+  width: 28px;
+  transform: translateY(-4.25px) rotate(-45deg);
+}
+
+/* Kilau menyapu mark di header + bintang berkedip. */
+.mark-shine {
+  background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.95) 50%, transparent 65%);
+  background-size: 300% 100%;
+  background-position: 120% 0;
   mix-blend-mode: overlay;
-  transform: translateX(-120%);
-  animation: logo-shine 5s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+  animation: shine 5.5s ease-in-out 3s infinite;
 }
 
-.logo-lockup:hover .logo-shine::before {
-  animation-duration: 1.4s;
-}
-
-@keyframes logo-shine {
+@keyframes shine {
   0%,
-  62% {
-    transform: translateX(-120%);
+  70% {
+    background-position: 120% 0;
   }
   100% {
-    transform: translateX(220%);
+    background-position: -40% 0;
   }
 }
 
-.logo-star {
-  background: radial-gradient(circle, rgb(255 120 145 / 0.9), rgb(194 68 91 / 0.35) 35%, transparent 70%);
-  mix-blend-mode: screen;
-  animation: logo-star 2.6s ease-in-out infinite;
+.twinkle {
+  animation: twinkle 3.2s ease-in-out infinite;
 }
 
-@keyframes logo-star {
+@keyframes twinkle {
   0%,
   100% {
-    opacity: 0.35;
-    transform: translate(-50%, -50%) scale(0.7);
+    transform: scale(0.75) rotate(0deg);
+    opacity: 0.65;
   }
   50% {
+    transform: scale(1.1) rotate(45deg);
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1.15);
   }
 }
 
-/* ── Sistem animasi CSS: kelas .in dipasang RevealObserver; konten hanya disembunyikan bila JS aktif ── */
-:root {
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+/* ══ Menu layar penuh — dipasang sekali, buka/tutup cukup atribut ══ */
+.menu-panel {
+  visibility: hidden;
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.7s var(--ease-in-out-quint), visibility 0s linear 0.7s;
 }
 
-html.js .a-rise,
-html.js .a-pop,
-html.js .a-line,
-html.js .a-word {
-  transition:
-    opacity 0.8s var(--ease-out),
-    transform 0.9s var(--ease-out);
-  transition-delay: calc(var(--delay, 0ms) + var(--i, 0) * var(--stagger, 50ms));
+[data-menu="open"] .menu-panel {
+  visibility: visible;
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 0.8s var(--ease-in-out-quint), visibility 0s;
 }
 
-html.js .a-rise {
+.menu-item {
   opacity: 0;
-  transform: translateY(var(--y, 28px));
+  transform: translateY(40%);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-html.js .a-pop {
+[data-menu="open"] .menu-item {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.6s ease, transform 0.9s var(--ease-out-expo);
+  transition-delay: calc(0.3s + var(--i, 0) * 60ms);
+}
+
+.menu-link .menu-num {
+  transition: color 0.3s ease;
+}
+
+.menu-link .menu-text {
+  transition: transform 0.5s var(--ease-out-expo), color 0.3s ease;
+}
+
+.menu-link:hover .menu-text {
+  transform: translateX(18px);
+}
+
+.menu-link:hover .menu-num {
+  color: var(--signal);
+}
+
+/* ══ Hero ══ */
+.hero-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+}
+
+.hero-line > span {
+  display: block;
+  transform: translateY(105%);
+  animation: rise 1.2s var(--ease-out-expo) forwards;
+  animation-delay: calc(var(--intro-delay, 2.35s) + var(--i, 0) * 110ms);
+}
+
+.no-intro {
+  --intro-delay: 0.15s;
+}
+
+.hero-fade {
   opacity: 0;
-  transform: scale(0.86);
+  animation: fade-up 1s var(--ease-out-expo) forwards;
+  animation-delay: calc(var(--intro-delay, 2.35s) + 0.35s + var(--i, 0) * 90ms);
 }
 
-html.js .a-line {
+@keyframes rise {
+  to {
+    transform: none;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.hero-scrim {
+  background:
+    linear-gradient(180deg, rgb(3 6 26 / 0.55) 0%, rgb(3 6 26 / 0) 22%),
+    linear-gradient(0deg, rgb(3 6 26 / 0.85) 0%, rgb(3 6 26 / 0.25) 42%, rgb(3 6 26 / 0) 65%);
+}
+
+/* Garis progres video di bawah hero. */
+.video-progress {
+  transform-origin: left;
+  transform: scaleX(var(--p, 0));
+}
+
+.scroll-cue::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 40%;
+  background: currentColor;
+  animation: cue 2.2s var(--ease-in-out-quint) infinite;
+}
+
+@keyframes cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(260%);
+  }
+}
+
+/* ══ Reveal saat terlihat (satu IntersectionObserver) ══ */
+.js [data-reveal] {
   opacity: 0;
-  transform: translateX(-10px);
+  transform: translateY(28px);
+  transition: opacity 0.9s ease, transform 1.1s var(--ease-out-expo);
+  transition-delay: calc(var(--i, 0) * 80ms);
 }
 
-html.js .a-word {
-  transform: translateY(110%);
-}
-
-html.js .in.a-rise,
-html.js .in .a-rise,
-html.js .in.a-pop,
-html.js .in .a-pop,
-html.js .in .a-line,
-html.js .in .a-word {
+.js [data-reveal].in {
   opacity: 1;
   transform: none;
 }
 
-/* Jeda bergiliran untuk anak .stagger (tanpa perlu indeks dari React) */
-.stagger > :nth-child(2) { --i: 1; }
-.stagger > :nth-child(3) { --i: 2; }
-.stagger > :nth-child(4) { --i: 3; }
-.stagger > :nth-child(5) { --i: 4; }
-.stagger > :nth-child(6) { --i: 5; }
-.stagger > :nth-child(7) { --i: 6; }
-.stagger > :nth-child(8) { --i: 7; }
-.stagger > :nth-child(9) { --i: 8; }
-.stagger > :nth-child(10) { --i: 9; }
-.stagger > :nth-child(11) { --i: 10; }
-.stagger > :nth-child(12) { --i: 11; }
-.stagger > :nth-child(13) { --i: 12; }
-.stagger > :nth-child(14) { --i: 13; }
-.stagger > :nth-child(15) { --i: 14; }
-.stagger > :nth-child(n + 16) { --i: 15; }
-
-/* "Arrr" + "Studio" menyatu jadi ArrrStudio */
-.merge-plus {
-  width: 1.6em;
-  transition:
-    width 0.6s var(--ease-out) 0.9s,
-    opacity 0.6s var(--ease-out) 0.9s;
+.js [data-reveal="line"] {
+  opacity: 1;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.4s var(--ease-out-expo);
 }
 
-.merge-word {
-  color: var(--fog);
-  transition: color 0.5s ease 1.1s;
+.js [data-reveal="line"].in {
+  transform: scaleX(1);
 }
 
-.merge.in .merge-plus {
-  width: 0;
+/* Masker dipasang di ANAK elemen: elemen yang diamati tetap punya luas, karena IntersectionObserver
+   menghitung clip-path (luas nol = tidak pernah "terlihat"). */
+.js [data-reveal="mask"] {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+.js [data-reveal="mask"] > * {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1.3s var(--ease-in-out-quint);
+  transition-delay: calc(var(--i, 0) * 120ms);
+}
+
+.js [data-reveal="mask"].in > * {
+  clip-path: inset(0 0 0 0);
+}
+
+/* ══ Pernyataan editorial: kata menyala mengikuti scroll (--p 0→1 dari JS) ══ */
+.scrub-word {
+  opacity: clamp(0.16, calc(var(--p, 0) * var(--n) * 1.15 - var(--i) + 1), 1);
+  transition: opacity 0.12s linear;
+}
+
+/* ══ Carousel ekosistem (acuan: "Explore our pursuit of perfection") ══ */
+.rail {
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+}
+
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+.rail[data-dragging="true"] {
+  scroll-snap-type: none;
+  cursor: grabbing;
+}
+
+.rail[data-dragging="true"] a {
+  pointer-events: none;
+}
+
+.rail-card {
+  scroll-snap-align: start;
+}
+
+/* Gambar produk: duotone navy → warna asli saat hover (produk terungkap). */
+.media-duo {
+  position: relative;
+  overflow: hidden;
+  background: var(--navy-900);
+}
+
+.media-duo img {
+  transition: transform 1.2s var(--ease-out-expo), filter 0.8s ease;
+  filter: grayscale(1) contrast(1.05) brightness(0.9);
+}
+
+.media-duo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgb(31 50 117 / 0.55), rgb(6 11 28 / 0.6));
+  mix-blend-mode: multiply;
+  transition: opacity 0.8s ease;
+}
+
+.group:hover .media-duo img,
+.group:focus-visible .media-duo img {
+  transform: scale(1.045);
+  filter: none;
+}
+
+.group:hover .media-duo::after,
+.group:focus-visible .media-duo::after {
   opacity: 0;
 }
 
-.merge.in .merge-word {
-  color: #ffffff;
+.rail-progress {
+  transform-origin: left;
+  transform: translateX(calc(var(--p, 0) * (100% / var(--w, 0.3) - 100%))) scaleX(1);
+  width: calc(var(--w, 0.3) * 100%);
+  transition: transform 0.15s linear;
 }
 
-/* Kartu miring mengikuti kursor (nilai --rx/--ry dari TiltCard) */
-.tilt-card {
-  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
-  transition: transform 0.5s var(--ease-out);
-  transform-style: preserve-3d;
+/* Orbit + bintang dari logo untuk kartu Discord (tanpa screenshot). */
+.orbit-spin {
+  transform-origin: 50% 50%;
+  animation: orbit 18s linear infinite;
 }
 
-/* Gerak terikat scroll (Chrome/Edge/Safari baru); browser lain tampil statis */
-@supports (animation-timeline: view()) {
-  .tilt-scroll {
-    transform-origin: 50% 0%;
-    animation: tilt-in linear both;
-    animation-timeline: view();
-    animation-range: entry 0% cover 40%;
-  }
-
-  @keyframes tilt-in {
-    from {
-      transform: rotateX(28deg) scale(0.9);
-    }
-    to {
-      transform: none;
-    }
-  }
-
-  .parallax {
-    animation: parallax linear both;
-    animation-timeline: view();
-  }
-
-  @keyframes parallax {
-    from {
-      translate: 0 calc(var(--px) * -1);
-    }
-    to {
-      translate: 0 var(--px);
-    }
-  }
-
-  .line-fill-x,
-  .line-fill-y {
-    animation-timeline: view();
-    animation-range: entry 30% cover 60%;
-    animation-fill-mode: both;
-    animation-timing-function: linear;
-  }
-
-  .line-fill-x {
-    animation-name: fill-x;
-  }
-
-  .line-fill-y {
-    animation-name: fill-y;
-  }
-
-  @keyframes fill-x {
-    from {
-      transform: scaleX(0);
-    }
-  }
-
-  @keyframes fill-y {
-    from {
-      transform: scaleY(0);
-    }
+@keyframes orbit {
+  to {
+    transform: rotate(360deg);
   }
 }
 
-@supports (animation-timeline: scroll()) {
-  .btt-progress {
-    stroke-dasharray: 1;
-    animation: btt-progress linear both;
-    animation-timeline: scroll(root);
-  }
+/* ══ Asal-usul: foto parallax ══ */
+.parallax-img {
+  transform: translateY(calc((var(--p, 0.5) - 0.5) * -14%)) scale(1.16);
+  will-change: transform;
+}
 
-  @keyframes btt-progress {
-    from {
-      stroke-dashoffset: 1;
-    }
-    to {
-      stroke-dashoffset: 0;
-    }
+/* ══ Standar: panel menumpuk (sticky) ══ */
+.stack-panel {
+  top: calc(5.5rem + var(--i) * 1.25rem);
+}
+
+/* ══ Katalog: baris dengan sapuan garis ══ */
+.index-row {
+  position: relative;
+}
+
+.index-row::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.6s var(--ease-out-expo);
+}
+
+.index-row:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.index-row .index-name {
+  transition: transform 0.5s var(--ease-out-expo);
+}
+
+.index-row:hover .index-name {
+  transform: translateX(10px);
+}
+
+/* ══ Linimasa horizontal ter-pin (desktop) ══ */
+.track {
+  transform: translateX(calc(var(--p, 0) * var(--shift, 0px) * -1));
+  will-change: transform;
+}
+
+.track-fill {
+  transform-origin: left;
+  transform: scaleX(var(--p, 0));
+}
+
+.track-star {
+  left: calc(var(--p, 0) * 100%);
+}
+
+/* Mode daftar (HP / gerak dikurangi / sebelum JS). */
+.tl-viewport {
+  margin: 0 auto;
+  max-width: none;
+  padding: 3.5rem 1rem 6rem;
+}
+
+.tl-rule {
+  display: none;
+}
+
+.tl-track {
+  display: flex;
+  flex-direction: column;
+}
+
+.tl-item {
+  position: relative;
+  border-top: 1px solid var(--line);
+  padding: 2rem 4.5rem 2rem 0;
+}
+
+.tl-num {
+  position: absolute;
+  right: 0;
+  top: 1.6rem;
+  font-size: 2.6rem;
+  line-height: 1;
+}
+
+@media (min-width: 640px) {
+  .tl-viewport {
+    padding-inline: 2rem;
   }
 }
 
-/* ── Mark statis hero (HP / sebelum 3D siap): melayang pelan, murni compositor ── */
-.hero-mark-idle {
-  translate: -50% -50%;
-  animation: mark-float 6s ease-in-out infinite;
+/* Mode ter-pin (desktop): tinggi section = jarak gulir, isi ditempel dan digeser ke kiri. */
+.tl[data-pin="on"] {
+  height: calc(100vh + var(--count) * 42vh);
 }
 
-@keyframes mark-float {
-  0%,
-  100% {
-    transform: translateY(-6px) rotate(-1.5deg);
-  }
-  50% {
-    transform: translateY(6px) rotate(1.5deg);
-  }
+.tl[data-pin="on"] .tl-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
+.tl[data-pin="on"] .tl-viewport {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: none;
+  margin: 0;
+  padding: 0 0 3rem;
+}
+
+.tl[data-pin="on"] .tl-rule {
+  display: block;
+  position: relative;
+  height: 1px;
+  margin: 0 3rem 3.5rem;
+  background: var(--line-strong);
+}
+
+.tl[data-pin="on"] .tl-track {
+  flex-direction: row;
+  width: max-content;
+  padding: 0 3rem;
+}
+
+.tl[data-pin="on"] .tl-item {
+  width: 28rem;
+  border-top: 0;
+  border-left: 1px solid var(--line);
+  padding: 0 4rem 5rem 2rem;
+}
+
+.tl[data-pin="on"] .tl-num {
+  top: auto;
+  bottom: 0;
+  left: 2rem;
+  right: auto;
+  font-size: 5rem;
+}
+
+.content-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
+/* ══ Gerak dikurangi: semua tampil langsung ══ */
 @media (prefers-reduced-motion: reduce) {
-  html.js .a-rise,
-  html.js .a-pop,
-  html.js .a-line,
-  html.js .a-word {
+  .intro {
+    display: none;
+  }
+
+  .hero-line > span,
+  .hero-fade {
+    animation: none;
     opacity: 1;
     transform: none;
   }
 
-
-  html {
-    scroll-behavior: auto;
+  .js [data-reveal],
+  .js [data-reveal="line"],
+  .js [data-reveal="mask"] > * {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+    transition: none;
   }
-  .tilt-scroll,
-  .parallax,
-  .line-fill-x,
-  .line-fill-y,
-  .hero-mark-idle,
-  .logo-shine::before,
-  .logo-star {
+
+  .scrub-word {
+    opacity: 1;
+  }
+
+  .mark-shine,
+  .twinkle,
+  .orbit-spin,
+  .scroll-cue::after {
     animation: none;
   }
+
+  .parallax-img,
+  .track {
+    transform: none;
+  }
+
   *,
   *::before,
   *::after {
-    transition-duration: 0s !important;
-    animation-duration: 0s !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
-@keyframes pulse-dot {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.35;
-  }
+/* ══ Logo: asli di navy, diisi tinta di tema terang ══ */
+.logo-ink {
+  display: none;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
 }
 
-.live-dot {
-  animation: pulse-dot 2.4s ease-in-out infinite;
+[data-theme="light"] .logo-auto .logo-raw {
+  visibility: hidden;
+}
+
+[data-theme="light"] .logo-auto .logo-ink {
+  display: block;
+}
+
+[data-theme="light"] :is(.cinema, [data-solid="false"]) .logo-auto .logo-raw {
+  visibility: visible;
+}
+
+[data-theme="light"] :is(.cinema, [data-solid="false"]) .logo-auto .logo-ink {
+  display: none;
 }

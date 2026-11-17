@@ -1,24 +1,34 @@
 "use client";
 
 import { ArrowUp } from "iconoir-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
-// Muncul setelah menggulir ±1 layar; cincin chrome menunjukkan progres scroll (CSS scroll-driven).
+// Tombol kotak di pojok kanan bawah: muncul setelah hero terlewati, bingkainya terisi sesuai progres scroll.
+// Satu listener scroll (rAF), dilepas saat unmount.
 export default function BackToTop({ label }: { label: string }) {
   const [visible, setVisible] = useState(false);
+  const ring = useRef<SVGRectElement>(null);
 
   useEffect(() => {
     let raf = 0;
+    const update = () => {
+      raf = 0;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const y = window.scrollY;
+      setVisible(y > window.innerHeight * 0.9);
+      ring.current?.style.setProperty("stroke-dashoffset", String(1 - (max > 0 ? y / max : 0)));
+    };
     const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => setVisible(window.scrollY > window.innerHeight * 0.9));
+      if (!raf) raf = requestAnimationFrame(update);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
     };
   }, []);
 
@@ -37,22 +47,15 @@ export default function BackToTop({ label }: { label: string }) {
       tabIndex={visible ? 0 : -1}
       aria-hidden={!visible}
       className={cn(
-        "group fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] right-5 z-50 grid size-12 cursor-pointer place-items-center rounded-full bg-[#0f1011] text-[var(--mist)] shadow-[0_12px_32px_-8px_rgb(0_0_0/0.5)] transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 active:scale-90 md:right-8",
-        visible ? "opacity-100" : "pointer-events-none translate-y-4 scale-75 opacity-0",
+        "to-top group fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] right-4 z-40 grid size-12 cursor-pointer place-items-center bg-surface text-ink shadow-[0_14px_30px_-12px_rgb(3_6_26/0.55)] transition-[opacity,transform,background-color,color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-cta hover:text-cta-ink active:scale-90 sm:right-8 lg:right-12",
+        visible ? "opacity-100" : "pointer-events-none translate-y-6 opacity-0",
       )}
     >
-      <svg aria-hidden viewBox="0 0 48 48" className="absolute inset-0 size-full -rotate-90">
-        <defs>
-          <linearGradient id="btt-chrome" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#e5e5e6" />
-            <stop offset="55%" stopColor="#8a8f98" />
-            <stop offset="100%" stopColor="#a3243b" />
-          </linearGradient>
-        </defs>
-        <circle cx="24" cy="24" r="22.5" fill="none" stroke="rgb(255 255 255 / 0.1)" strokeWidth="1" />
-        <circle className="btt-progress" cx="24" cy="24" r="22.5" fill="none" stroke="url(#btt-chrome)" strokeWidth="1.5" strokeLinecap="round" pathLength={1} />
+      <svg aria-hidden viewBox="0 0 48 48" className="absolute inset-0 size-full">
+        <rect x="0.5" y="0.5" width="47" height="47" fill="none" stroke="var(--line-strong)" strokeWidth="1" />
+        <rect ref={ring} x="0.5" y="0.5" width="47" height="47" fill="none" stroke="var(--signal)" strokeWidth="1.5" pathLength={1} strokeDasharray="1" strokeDashoffset="1" />
       </svg>
-      <ArrowUp aria-hidden width={18} height={18} strokeWidth={1.7} className="relative transition-transform duration-200 group-hover:-translate-y-0.5" />
+      <ArrowUp aria-hidden width={18} height={18} strokeWidth={1.6} className="relative transition-transform duration-300 group-hover:-translate-y-0.5" />
     </button>
   );
 }

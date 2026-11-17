@@ -1,44 +1,53 @@
-import Reveal from "@/components/motion/Reveal";
-import { Stagger, StaggerItem } from "@/components/motion/Stagger";
-import ActionLink from "@/components/shared/ActionLink";
-import SectionHead from "@/components/shared/SectionHead";
-import { Catalog as catalog } from "@/config/studio";
+import { ArrowUpRight } from "iconoir-react";
+import type { CSSProperties } from "react";
+import { Catalog as groups } from "@/config/studio";
 import { Url } from "@/Url/Url";
 import type { Dictionary } from "@/utils/i18n";
-import { sectionIndex } from "../_constants/sections";
+import SectionLabel from "./SectionLabel";
 
+// Katalog sebagai indeks bernomor (bukan grid kartu): baris dengan garis yang menyapu saat hover.
 export default function Catalog({ t }: { t: Dictionary["catalog"] }) {
-  const groups = [...catalog.map((g) => ({ title: t.groups[g.key], items: g.items })), { title: t.groups.services, items: t.services }];
+  const columns = [
+    ...groups.map((g) => ({ key: g.key, title: t.groups[g.key], items: g.items as readonly string[] })),
+    { key: "services", title: t.groups.services, items: t.services },
+  ];
 
   return (
-    <section id="catalog" aria-labelledby="catalog-title" className="mx-auto max-w-[1200px] px-5 py-16 md:px-8 md:py-24">
-      <div className="grid gap-12 md:grid-cols-12 md:gap-8">
-        <div className="md:col-span-5">
-          <SectionHead id="catalog-title" index={sectionIndex("catalog")} label={t.label} title={t.title} lead={t.lead} />
-          <Reveal delay={0.25} className="mt-8">
-            <ActionLink href={Url.store}>{t.cta}</ActionLink>
-          </Reveal>
+    <section id="catalog" aria-labelledby="catalog-title" className="bg-surface">
+      <div className="px-4 py-24 sm:px-8 lg:px-12 lg:py-36">
+        <SectionLabel id="catalog">{t.label}</SectionLabel>
+        <div className="mb-16 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <h2 id="catalog-title" data-reveal className="display text-[clamp(1.8rem,4.2vw,3.6rem)]">
+            {t.title}
+          </h2>
+          <p data-reveal className="max-w-[26rem] text-[15px] leading-relaxed text-ink-2">
+            {t.lead}
+          </p>
         </div>
 
-        <Reveal className="md:col-span-7">
-          <div className="frame spotlight divide-y-[0.5px] divide-line">
-            {groups.map((group) => (
-              <div key={group.title} className="p-6">
-                <h3 className="flex items-baseline justify-between text-[15px] font-[510]">
-                  {group.title}
-                  <span className="font-mono text-xs font-normal tabular-nums text-ink-3">{String(group.items.length).padStart(2, "0")}</span>
-                </h3>
-                <Stagger as="ul" gap={0.035} delay={0.15} className="mt-4 flex flex-wrap gap-2">
-                  {group.items.map((name) => (
-                    <StaggerItem as="li" variant="pop" key={name} className="rounded-full bg-tint px-3 py-1 text-[13px] text-ink-2 transition-colors hover:text-ink">
-                      {name}
-                    </StaggerItem>
-                  ))}
-                </Stagger>
-              </div>
-            ))}
-          </div>
-        </Reveal>
+        <div className="grid gap-14 lg:grid-cols-3 lg:gap-10">
+          {columns.map((col) => (
+            <div key={col.key}>
+              <p className="label flex items-baseline justify-between border-b border-line-strong pb-4 text-ink">
+                {col.title}
+                <span className="text-ink-3">{String(col.items.length).padStart(2, "0")}</span>
+              </p>
+              <ul>
+                {col.items.map((name, i) => (
+                  <li key={name} data-reveal style={{ "--i": i } as CSSProperties} className="index-row flex items-baseline gap-4 border-b border-line py-3.5">
+                    <span className="label w-6 shrink-0 text-ink-3">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="index-name text-[16px] text-ink">{name}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        <a href={Url.store} target="_blank" rel="noopener" className="btn btn-solid mt-14">
+          {t.cta}
+          <ArrowUpRight aria-hidden width={15} height={15} strokeWidth={1.6} className="btn-arrow" />
+        </a>
       </div>
     </section>
   );

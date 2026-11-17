@@ -1,45 +1,32 @@
-import Image from "next/image";
 import type { CSSProperties } from "react";
 import { Studio } from "@/config/studio";
 import { cn } from "@/lib/utils";
 
-// Lockup kecil: mark "A" chrome + teks ArrrStudio. Kilau cahaya menyapu chrome (di-mask bentuk mark)
-// dan bintang maroon berkedip — logo terasa hidup tapi teks tetap jelas di ukuran header.
-export function LogoLockup({ className, height = 30, priority = false }: { className?: string; height?: number; priority?: boolean }) {
-  const { src, width: w, height: h } = Studio.mark;
-  const width = Math.round((height * w) / h);
-  const mask = { maskImage: `url(${Studio.markMask})`, WebkitMaskImage: `url(${Studio.markMask})` } as CSSProperties;
+type Asset = { src: string; width: number; height: number };
 
+// Logo resmi tampil apa adanya (silver) di area navy; di tema terang di atas kertas, bentuk yang sama diisi warna tinta
+// lewat mask supaya tetap kontras. Pemilihan lewat CSS (.logo-auto) — markup server & klien identik.
+function LogoAsset({ asset, height, className, shine }: { asset: Asset; height: number; className?: string; shine?: boolean }) {
+  const width = Math.round((height * asset.width) / asset.height);
+  const mask = { maskImage: `url(${asset.src})`, WebkitMaskImage: `url(${asset.src})` } as CSSProperties;
   return (
-    <span className={cn("logo-lockup group inline-flex items-center gap-2.5", className)}>
-      <span className="relative block shrink-0" style={{ width, height }}>
-        <Image src={src} alt="" width={width * 2} height={height * 2} priority={priority} className="size-full select-none" draggable={false} />
-        <span aria-hidden className="logo-shine absolute inset-0" style={mask} />
-        <span aria-hidden className="logo-star absolute left-[63%] top-[57%] size-[38%] -translate-x-1/2 -translate-y-1/2 rounded-full" />
-      </span>
-      <span className="text-[16px] font-[510] leading-none tracking-[-0.012em] text-ink">
-        Arrr<span className="text-ink-3 transition-colors duration-300 group-hover:text-ink">Studio</span>
-      </span>
+    <span className={cn("logo-auto relative block shrink-0", className)} style={{ width, height }}>
+      {/* eslint-disable-next-line @next/next/no-img-element -- aset kecil tetap, tanpa optimasi agar mask & img memakai file yang sama */}
+      <img src={asset.src} alt="" width={width} height={height} className="logo-raw size-full select-none" draggable={false} decoding="async" />
+      <span aria-hidden className="logo-ink absolute inset-0 bg-current" style={mask} />
+      {shine && <span aria-hidden className="mark-shine absolute inset-0" style={mask} />}
     </span>
   );
 }
 
-// Wordmark penuh (chrome + "STUDIO") untuk tempat yang lega.
-export default function Logo({ className, height = 32, priority = false }: { className?: string; height?: number; priority?: boolean }) {
-  const { src, width: w, height: h } = Studio.logo;
-  const width = Math.round((height * w) / h);
+export function Mark({ height = 30, className, shine = true }: { height?: number; className?: string; shine?: boolean }) {
+  return <LogoAsset asset={Studio.mark} height={height} className={className} shine={shine} />;
+}
 
-  return (
-    <Image
-      src={src}
-      alt={Studio.name}
-      width={width}
-      height={height}
-      priority={priority}
-      sizes={`${width}px`}
-      className={cn("select-none", className)}
-      style={{ width, height }}
-      draggable={false}
-    />
-  );
+export function Wordmark({ height = 11, className }: { height?: number; className?: string }) {
+  return <LogoAsset asset={Studio.wordmark} height={height} className={className} />;
+}
+
+export function Lockup({ height = 120, className }: { height?: number; className?: string }) {
+  return <LogoAsset asset={Studio.lockup} height={height} className={className} shine />;
 }
